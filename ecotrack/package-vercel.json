@@ -1,0 +1,65 @@
+{
+  "name": "ecotrack",
+  "version": "1.0.0",
+  "description": "AI-Powered Plastic Waste Tracking & Environmental Impact Platform",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "deploy:backend": "cd python-backend && vercel --prod",
+    "setup:env": "cp env.example .env.local",
+    "vercel:build": "npm run build"
+  },
+  "dependencies": {
+    "@tensorflow-models/coco-ssd": "^2.2.3",
+    "@tensorflow/tfjs": "^4.22.0",
+    "baseline-browser-mapping": "^2.8.18",
+    "canvas-confetti": "^1.9.3",
+    "critters": "^0.0.23",
+    "framer-motion": "12.23.24",
+    "lucide-react": "^0.460.0",
+    "next": "^15.5.6",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hot-toast": "2.4.1",
+    "react-webcam": "^7.2.0",
+    "recharts": "2.12.7",
+    "swr": "2.2.4",
+    "zustand": "4.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "20.0.0",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "autoprefixer": "10.4.21",
+    "browserslist": "^4.26.3",
+    "eslint": "8.0.0",
+    "eslint-config-next": "^15.0.0",
+    "postcss": "8.5.6",
+    "tailwindcss": "3.4.0",
+    "typescript": "^5.0.0",
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/ecotrack.git"
+  },
+  "keywords": [
+    "plastic-waste",
+    "environmental-impact",
+    "ai-detection",
+    "sustainability",
+    "nextjs",
+    "tensorflow",
+    "pwa"
+  ],
+  "author": "EcoTrack Team",
+  "license": "MIT"
+}

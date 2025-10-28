@@ -4,14 +4,15 @@
 type AppRoutes = "/" | "/access-test" | "/auth-test" | "/card-test" | "/chatbot" | "/collector" | "/collector/history" | "/collector/navigation" | "/collector/performance" | "/collector/routes" | "/collector/routes/[id]" | "/collector/routes/create" | "/collector/schedule" | "/depot" | "/depot/analytics" | "/depot/inventory" | "/depot/processing" | "/depot/transportation" | "/forgot-password" | "/hub" | "/hub/analytics" | "/hub/reports" | "/hub/rewards" | "/hub/settings" | "/hub/team" | "/individual" | "/individual/dashboard" | "/individual/leaderboard" | "/individual/log-plastic" | "/individual/rewards" | "/individual/rewards-requests" | "/insights" | "/language-test" | "/login" | "/mock-login" | "/profile" | "/progress" | "/register" | "/scan" | "/simple" | "/test" | "/test-simple"
 type PageRoutes = never
 type LayoutRoutes = "/"
-type RedirectRoutes = never
-type RewriteRoutes = never
+type RedirectRoutes = "/dashboard" | "/scanner"
+type RewriteRoutes = "/api/python/[[...path]]"
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes
 
 
 interface ParamMap {
   "/": {}
   "/access-test": {}
+  "/api/python/[[...path]]": { "path"?: string[]; }
   "/auth-test": {}
   "/card-test": {}
   "/chatbot": {}
@@ -23,6 +24,7 @@ interface ParamMap {
   "/collector/routes/[id]": { "id": string; }
   "/collector/routes/create": {}
   "/collector/schedule": {}
+  "/dashboard": {}
   "/depot": {}
   "/depot/analytics": {}
   "/depot/inventory": {}
@@ -49,6 +51,7 @@ interface ParamMap {
   "/progress": {}
   "/register": {}
   "/scan": {}
+  "/scanner": {}
   "/simple": {}
   "/test": {}
   "/test-simple": {}
