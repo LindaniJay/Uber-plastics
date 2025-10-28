@@ -1,0 +1,338 @@
+{
+  "country": "São Tomé and Príncipe",
+  "region": "Central Africa",
+  "population": 236000,
+  "area": 964,
+  "areaUnit": "km²",
+  "populationDensity": 207,
+  "populationDensityUnit": "per km²",
+  "urbanPopulation": 73,
+  "urbanPopulationUnit": "%",
+  "populationProjection2050": 400000,
+  "gdp": 0.547,
+  "gdpUnit": "billion USD",
+  "islands": [
+    "São Tomé", "Príncipe"
+  ],
+  "plasticWaste": {
+    "annualGeneration": 6114,
+    "unit": "tons/year",
+    "perCapita": 0.1,
+    "unitPerCapita": "kg/person/day",
+    "recyclingRate": 3.6,
+    "unitRecyclingRate": "% of MSW",
+    "oceanLeakage": 680,
+    "unitOceanLeakage": "tons/year",
+    "plasticComposition": 3.6,
+    "plasticCompositionUnit": "% of MSW"
+  },
+  "tradeData": {
+    "plasticImports": {
+      "annualVolume": 2910,
+      "unit": "tons/year average (2017-2021)",
+      "trend": "Product-dominated (96% products, 4% primary forms)",
+      "primaryForms": {
+        "other": 62,
+        "pp": 18,
+        "syntheticRubber": 14,
+        "polyester": 1
+      },
+      "productForms": {
+        "polyester": 26,
+        "ldpe": 20,
+        "pp": 17,
+        "hdpe": 11,
+        "pvc": 11,
+        "pet": 6,
+        "ps": 5,
+        "syntheticRubber": 4
+      },
+      "wasteImports": 0.3,
+      "wasteImportsUnit": "tonnes (2017 only)"
+    },
+    "plasticExports": {
+      "annualVolume": 142,
+      "unit": "tons/year",
+      "trend": "Stable (85% primary forms, 15% products)",
+      "primaryForms": {
+        "ldpe": 52,
+        "pp": 28,
+        "hdpe": 20
+      },
+      "productForms": {
+        "pp": 25,
+        "ldpe": 18,
+        "polyester": 17,
+        "hdpe": 14,
+        "pet": 9,
+        "ps": 8,
+        "pvc": 8,
+        "syntheticRubber": 2
+      },
+      "wasteExports": 0,
+      "wasteExportsUnit": "tonnes (2018-2021)"
+    },
+    "topImportApplications": {
+      "clothes": "highest volume",
+      "drinkBottles": "highest volume",
+      "tubesPipesHoses": "2.3x increase (2017-2021)"
+    }
+  },
+  "wasteManagement": {
+    "mswGeneration": {
+      "perCapita": 0.4,
+      "unit": "kg/person/day (2014)",
+      "total2014": 25587,
+      "total2015": 24249,
+      "unitTotal": "tonnes/year"
+    },
+    "collectionCoverage": {
+      "national": 19,
+      "urban": 60,
+      "unit": "%"
+    },
+    "beachLitter": {
+      "density": 53107,
+      "unit": "items per km² (2016)"
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 180000,
+      "unit": "tons CO2/year",
+      "perCapita": 0.82,
+      "unitPerCapita": "tons CO2/year"
+    },
+    "marinePollution": {
+      "beachCleanupData": {
+        "annualEvents": 28,
+        "volunteers": 800,
+        "wasteCollected": 5.2,
+        "unitWasteCollected": "tons"
+      },
+      "microplastics": {
+        "concentration": 0.6,
+        "unit": "particles/m³",
+        "trend": "stable"
+      }
+    }
+  },
+  "economicData": {
+    "gdp": 0.4,
+    "unitGdp": "billion USD",
+    "tourismContribution": 15,
+    "unitTourismContribution": "% of GDP",
+    "wasteManagementCost": 1.2,
+    "unitWasteManagementCost": "million USD/year"
+  },
+  "policyFramework": {
+    "nationalCoordination": {
+      "ministry": "Ministry of Environment, Youth, and Sustainable Tourism",
+      "directorate": "Directorate-General for the Environment and Climate Action (DGA)",
+      "commissions": [
+        "National Environment Commission",
+        "Technical Environmental Commission",
+        "Chemical Products Management Committee (CNGPQ)"
+      ],
+      "agencies": [
+        "General Customs Authority (AGA)",
+        "Directorate for the Regulation and Control of Economic Activities",
+        "Maritime and Port Institute São Tomé and Príncipe (IMAP-SP)"
+      ]
+    },
+    "plasticLegislation": {
+      "plasticBagRegulation": {
+        "name": "Plastic Bag Regulation (Law No. 8/2020)",
+        "description": "Bans production, import, marketing and distribution of non-biodegradable plastic bags",
+        "penalties": "Various fines and/or closure of establishment",
+        "exceptions": [
+          "Plastic films for packaging fish, meat, chicken or their fresh products",
+          "Fruit, vegetables, and ice packaging",
+          "Health, industry, and construction sectors"
+        ],
+        "alternatives": "Encourages import and production of alternative products",
+        "awareness": "Awareness-raising actions for alternative solutions"
+      },
+      "environmentalImpactFee": {
+        "name": "Environmental Impact Fee (TIA) (Decree-Law No. 64/2013)",
+        "description": "Extended producer responsibility (EPR) for waste production",
+        "coverage": "All economic agents importing packaging, products and articles",
+        "purpose": "Financing solid waste management",
+        "status": "Never effectively collected due to implementation challenges"
+      }
+    },
+    "wasteManagementLegislation": {
+      "wasteRegime": {
+        "name": "Waste Regime (Decree No. 36/99)",
+        "description": "Defines competences in waste management",
+        "features": [
+          "Selective collection of plastic and waste materials",
+          "Tax benefits for companies investing in waste recovery and recycling",
+          "Regulation on disposal of waste in landfills",
+          "Prohibition of dumping at sea",
+          "Sanctions for illegal dumping"
+        ]
+      },
+      "comprehensiveWastePlan": {
+        "name": "Comprehensive Waste Management Plan (2024)",
+        "objectives": [
+          "Minimise municipal solid waste production",
+          "Improve MSW management and handling",
+          "Reduce MSW disposal in landfills and dumps",
+          "Reduce risk of dangerous exposure to human health and environment",
+          "Improve compliance with regulations",
+          "Improve capacities and transparency",
+          "Build partnerships"
+        ]
+      }
+    },
+    "internationalConventions": {
+      "ratified": [
+        "Basel Convention on Transboundary Waste (2013)",
+        "Rotterdam Convention on Hazardous Chemicals (2013)",
+        "Stockholm Convention on POPs (2006)",
+        "Minamata Convention on Mercury (2018)",
+        "UNCLOS (1987)",
+        "MARPOL Annex V (2002)",
+        "SOLAS (1998)",
+        "CBD (1999)",
+        "Paris Agreement (2016)"
+      ],
+      "signedNotRatified": [
+        "Bamako Convention (signed, not ratified)",
+        "BBNJ Agreement (signed 2024, not ratified)"
+      ],
+      "notSigned": [
+        "Abidjan Convention",
+        "London Convention and Protocol"
+      ]
+    }
+  },
+  "initiatives": [
+    {
+      "name": "Príncipe Biosphere Reserve",
+      "description": "Sustainable development and conservation program",
+      "status": "active",
+      "startDate": "2012-01-01",
+      "area": 135,
+      "unitArea": "km²"
+    },
+    {
+      "name": "Zero Waste Communities",
+      "description": "Pilot program for waste-free communities",
+      "status": "active",
+      "startDate": "2020-09-01",
+      "participatingCommunities": 8
+    },
+    {
+      "name": "Eco-Fisheries Program",
+      "description": "Sustainable fishing practices and ocean conservation",
+      "status": "active",
+      "startDate": "2018-03-01",
+      "fishermen": 1200
+    }
+  ],
+  "challenges": [
+    "Limited waste collection infrastructure",
+    "High cost of waste transportation between islands",
+    "Limited public awareness about recycling",
+    "Dependence on imported goods and packaging",
+    "Seasonal waste management challenges"
+  ],
+  "opportunities": [
+    "Strong government commitment to environmental protection",
+    "Active community participation in conservation",
+    "Growing eco-tourism potential",
+    "International conservation partnerships",
+    "Innovative local waste management solutions"
+  ],
+  "regionalFactors": {
+    "plasticImportFactor": 0.65,
+    "tourismMultiplier": 1.1,
+    "seasonalVariation": 0.3,
+    "islandIsolationFactor": 1.4
+  },
+  "detailedTradeData": {
+    "importTrends": {
+      "period": "2017-2021",
+      "annualAverage": 2910,
+      "unit": "tonnes/year",
+      "composition": {
+        "products": 96,
+        "primaryForms": 4,
+        "waste": 0.1
+      },
+      "primaryForms": {
+        "other": 62,
+        "pp": 18,
+        "syntheticRubber": 14,
+        "polyester": 1
+      },
+      "productForms": {
+        "polyester": 26,
+        "ldpe": 20,
+        "pp": 17,
+        "hdpe": 11,
+        "pvc": 11,
+        "pet": 6,
+        "ps": 5,
+        "syntheticRubber": 4
+      }
+    },
+    "exportTrends": {
+      "annualVolume": 142,
+      "unit": "tonnes/year",
+      "composition": {
+        "primaryForms": 85,
+        "products": 15,
+        "waste": 0
+      }
+    },
+    "problematicPlastics": {
+      "hsCodes": [
+        "392329: PVC sacks and bags",
+        "392390: Plastics articles for conveyance",
+        "392049: PVC plates and sheets"
+      ],
+      "papPercentage": 20,
+      "exportPapPercentage": 71
+    }
+  },
+  "policyCompliance": {
+    "plasticBagRegulation": {
+      "complianceScore": 70,
+      "banStatus": "Non-biodegradable plastic bags banned",
+      "penalties": "Fines and establishment closure",
+      "exceptions": ["Food packaging", "Health sector", "Industrial use"]
+    },
+    "environmentalImpactFee": {
+      "status": "Not effectively collected",
+      "purpose": "Extended producer responsibility",
+      "challenges": "Implementation difficulties"
+    },
+    "internationalCompliance": {
+      "ratified": ["Basel Convention", "MARPOL Annex V", "Minamata Convention"],
+      "gaps": ["Bamako Convention not ratified", "Abidjan Convention not signed"]
+    }
+  },
+  "scoringCriteria": {
+    "environmentalImpact": {
+      "co2Reduction": "0.15 kg CO2 per bottle",
+      "oceanProtection": "0.6 bottles prevented per scan",
+      "treeEquivalent": "2.8 trees per kg CO2 saved"
+    },
+    "policyAlignment": {
+      "plasticBagReduction": "Supports Law 8/2020",
+      "wasteManagement": "Comprehensive Waste Management Plan 2024",
+      "biodiversity": "Príncipe Biosphere Reserve"
+    },
+    "economicImpact": {
+      "tourismMultiplier": 1.1,
+      "localEconomy": "Eco-fisheries program support",
+      "costSavings": "Reduces waste management costs"
+    }
+  },
+  "lastUpdated": "2024-01-15",
+  "dataSource": "São Tomé Ministry of Environment, UNESCO, UNEP"
+}
+

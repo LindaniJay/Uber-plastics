@@ -1,0 +1,54 @@
+{
+  "name": "Cabo Verde",
+  "code": "CV",
+  "region": "West Africa",
+  "island_nation": true,
+  "blue_economy": {
+    "ocean_area_km2": 734265,
+    "coastal_length_km": 965,
+    "marine_protected_areas": 12,
+    "fishing_contribution_gdp": 0.8
+  },
+  "plastic_data": {
+    "imports": {
+      "total_tonnes_2021": 1250,
+      "growth_rate_2014_2021": 0.15,
+      "packaging_share": 0.72,
+      "textiles_share": 0.18,
+      "tubes_share": 0.10,
+      "by_year": {
+        "2014": 850,
+        "2015": 920,
+        "2016": 980,
+        "2017": 1050,
+        "2018": 1120,
+        "2019": 1180,
+        "2020": 1210,
+        "2021": 1250
+      }
+    },
+    "recycling": {
+      "capacity_tonnes_per_year": 200,
+      "current_rate": 0.16,
+      "infrastructure_gap_index": 0.84,
+      "collection_points": 8,
+      "processing_facilities": 2
+    },
+    "environmental_impact": {
+      "co2_per_bottle_kg": 0.02,
+      "ocean_plastic_reduction_per_bottle_kg": 0.15,
+      "marine_ecosystem_benefit_score": 0.85
+    }
+  },
+  "economic_indicators": {
+    "gdp_per_capita_usd": 3850,
+    "population": 561898,
+    "urbanization_rate": 0.67,
+    "tourism_contribution_gdp": 0.25
+  },
+  "sustainability_goals": {
+    "plastic_reduction_target_2030": 0.50,
+    "recycling_rate_target_2030": 0.40,
+    "marine_protection_target_2030": 0.30
+  }
+}

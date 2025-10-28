@@ -1,0 +1,161 @@
+{
+  "country": "Cabo Verde",
+  "population": 587925,
+  "area": 4033,
+  "gdp": 1.98,
+  "currency": "CVE",
+  "plasticWaste": {
+    "annualGeneration": 12000,
+    "perCapita": 20.4,
+    "recyclingRate": 8.5,
+    "landfillRate": 75.2,
+    "incinerationRate": 12.1,
+    "oceanLeakage": 4.2,
+    "composition": {
+      "PET": 35,
+      "HDPE": 25,
+      "PP": 20,
+      "LDPE": 12,
+      "PS": 5,
+      "Other": 3
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 2450,
+      "perCapita": 4.17,
+      "fromPlastic": 180
+    },
+    "oceanPollution": {
+      "plasticWaste": 504,
+      "microplastics": 2.1,
+      "marineLifeImpact": "High"
+    },
+    "wasteManagement": {
+      "collectionRate": 65,
+      "treatmentFacilities": 3,
+      "recyclingCenters": 8,
+      "informalSector": 40
+    }
+  },
+  "economicData": {
+    "wasteManagementCost": 2.3,
+    "recyclingValue": 0.8,
+    "tourismImpact": 15.2,
+    "employment": {
+      "formal": 120,
+      "informal": 450
+    }
+  },
+  "challenges": [
+    "Limited waste collection infrastructure in rural areas",
+    "High transportation costs for waste management",
+    "Low public awareness about plastic pollution",
+    "Insufficient funding for environmental programs",
+    "Dependency on imports for plastic products",
+    "Limited recycling technology and facilities"
+  ],
+  "opportunities": [
+    "Growing tourism sector creating demand for clean environments",
+    "International partnerships for waste management",
+    "Potential for circular economy development",
+    "Blue economy initiatives gaining momentum",
+    "EU funding opportunities for environmental projects",
+    "Strong community engagement potential"
+  ],
+  "initiatives": [
+    {
+      "name": "Plastic Collection Program",
+      "description": "Community-based plastic waste collection initiative",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 2500,
+      "bottlesCollected": 45000,
+      "co2Saved": 180
+    },
+    {
+      "name": "Beach Cleanup Campaign",
+      "description": "Regular beach cleaning activities with community participation",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 800,
+      "bottlesCollected": 12000,
+      "co2Saved": 48
+    },
+    {
+      "name": "Recycling Education Program",
+      "description": "School and community education on plastic waste management",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 1500,
+      "bottlesCollected": 0,
+      "co2Saved": 0
+    }
+  ],
+  "regionalData": {
+    "islands": [
+      {
+        "name": "Santiago",
+        "population": 294135,
+        "plasticWaste": 6000,
+        "recyclingRate": 12.5
+      },
+      {
+        "name": "São Vicente",
+        "population": 83532,
+        "plasticWaste": 1700,
+        "recyclingRate": 8.2
+      },
+      {
+        "name": "Sal",
+        "population": 39105,
+        "plasticWaste": 800,
+        "recyclingRate": 15.8
+      },
+      {
+        "name": "Boa Vista",
+        "population": 16400,
+        "plasticWaste": 330,
+        "recyclingRate": 6.5
+      }
+    ]
+  },
+  "trends": {
+    "plasticConsumption": {
+      "2020": 18.5,
+      "2021": 19.2,
+      "2022": 20.1,
+      "2023": 20.4,
+      "projected2024": 21.0
+    },
+    "recyclingRate": {
+      "2020": 5.2,
+      "2021": 6.8,
+      "2022": 7.5,
+      "2023": 8.5,
+      "projected2024": 10.2
+    },
+    "oceanLeakage": {
+      "2020": 5.8,
+      "2021": 5.2,
+      "2022": 4.8,
+      "2023": 4.2,
+      "projected2024": 3.8
+    }
+  },
+  "targets": {
+    "2030": {
+      "recyclingRate": 25,
+      "oceanLeakage": 2.0,
+      "circularEconomy": 15
+    },
+    "2050": {
+      "recyclingRate": 50,
+      "oceanLeakage": 0.5,
+      "circularEconomy": 40
+    }
+  }
+}
