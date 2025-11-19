@@ -7,7 +7,6 @@ import {
   BarChart3, 
   Trophy, 
   Plus,
-  Camera,
   TrendingUp,
   Award,
   Target
@@ -24,13 +23,6 @@ export default function IndividualPage() {
       icon: BarChart3,
       href: '/individual/dashboard',
       color: 'from-blue-500 to-blue-600'
-    },
-    {
-      title: 'Log Plastic',
-      description: 'Scan and log plastic bottles',
-      icon: Camera,
-      href: '/individual/log-plastic',
-      color: 'from-green-500 to-green-600'
     },
     {
       title: 'Leaderboard',

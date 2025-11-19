@@ -431,4 +431,4 @@ export function getJudgingScore(advancedScore: AdvancedScore, region: string): J
 }
 
 // Add this near the bottom (small helper to centralize app URL)
-export const recommendedMetadataBase = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+export const recommendedMetadataBase = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'

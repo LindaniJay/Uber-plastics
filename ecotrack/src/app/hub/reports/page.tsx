@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
@@ -19,6 +20,7 @@ import { useTheme } from '@/contexts/ThemeContext'
 
 export default function InstitutionReportsPage() {
   const { darkMode } = useTheme()
+  const [formattedReports, setFormattedReports] = useState<Array<{ id: number; title: string; type: string; date: string; status: string; description: string; metrics: any; color: string; formattedDate: string }>>([])
 
   const reports = [
     {
@@ -117,6 +119,16 @@ export default function InstitutionReportsPage() {
     drafts: reports.filter(r => r.status === 'draft').length,
     totalDownloads: 47
   }
+
+  // Format dates on client side to avoid hydration mismatch
+  useEffect(() => {
+    setFormattedReports(reports.map(report => ({
+      ...report,
+      formattedDate: new Date(report.date).toLocaleDateString()
+    })))
+  }, [])
+
+  const displayReports = formattedReports.length > 0 ? formattedReports : reports.map(r => ({ ...r, formattedDate: '' }))
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -221,7 +233,7 @@ export default function InstitutionReportsPage() {
 
         {/* Reports List */}
         <div className="space-y-6">
-          {reports.map((report, index) => (
+          {displayReports.map((report, index) => (
             <motion.div
               key={report.id}
               initial={{ opacity: 0, y: 20 }}
@@ -250,7 +262,7 @@ export default function InstitutionReportsPage() {
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-4 w-4 text-gray-500" />
                     <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      Generated: {new Date(report.date).toLocaleDateString()}
+                      Generated: {report.formattedDate || 'Loading...'}
                     </span>
                   </div>
                 </div>
@@ -263,7 +275,7 @@ export default function InstitutionReportsPage() {
                     <div className="text-sm opacity-90 capitalize">
                       {key.replace(/([A-Z])/g, ' $1').trim()}
                     </div>
-                    <div className="text-lg font-bold">{value}</div>
+                    <div className="text-lg font-bold">{String(value)}</div>
                   </div>
                 ))}
               </div>

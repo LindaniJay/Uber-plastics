@@ -70,6 +70,7 @@ export function CollectionConfirmation({
   const [currentStep, setCurrentStep] = useState(0)
   const [showAchievements, setShowAchievements] = useState(false)
   const [unlockedAchievements, setUnlockedAchievements] = useState<Achievement[]>([])
+  // Client component; avoid conditional hooks by not gating on mount
 
   const steps = [
     { title: "Collection Summary", icon: CheckCircle },

@@ -28,6 +28,10 @@ import {
 import { useTheme } from '@/contexts/ThemeContext'
 import caboVerdeData from '@/data/cabo_verde_real_data.json'
 import saoTomeData from '@/data/sao_tome_real_data.json'
+import zanzibarData from '@/data/zanzibar_real_data.json'
+import seychellesData from '@/data/seychelles_real_data.json'
+import comorosData from '@/data/comoros_real_data.json'
+import madagascarData from '@/data/madagascar_real_data.json'
 
 interface ProgressComparisonProps {
   depotData: {
@@ -40,7 +44,7 @@ interface ProgressComparisonProps {
     totalValue: number
     qualityScore: number
   }
-  selectedRegion: 'cabo-verde' | 'sao-tome'
+  selectedRegion: 'cabo-verde' | 'sao-tome' | 'zanzibar' | 'seychelles' | 'comoros' | 'madagascar'
   timeframe: '7d' | '30d' | '90d' | '1y'
 }
 
@@ -49,7 +53,14 @@ export function ProgressComparison({ depotData, selectedRegion, timeframe }: Pro
   const [isLoading, setIsLoading] = useState(true)
   const [selectedMetric, setSelectedMetric] = useState<'impact' | 'efficiency' | 'economic' | 'environmental'>('impact')
 
-  const currentData = selectedRegion === 'cabo-verde' ? caboVerdeData : saoTomeData as any
+  const currentData = 
+    selectedRegion === 'cabo-verde' ? caboVerdeData :
+    selectedRegion === 'sao-tome' ? saoTomeData :
+    selectedRegion === 'zanzibar' ? zanzibarData :
+    selectedRegion === 'seychelles' ? seychellesData :
+    selectedRegion === 'comoros' ? comorosData :
+    selectedRegion === 'madagascar' ? madagascarData :
+    caboVerdeData as any
 
   useEffect(() => {
     const timer = setTimeout(() => {

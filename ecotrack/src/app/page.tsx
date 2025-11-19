@@ -27,11 +27,6 @@ export default function HomePage() {
   const { darkMode } = useTheme()
   const { user, isAuthenticated } = useAuth()
   const router = useRouter()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   // Note: Removed automatic redirect to allow users to stay on home page
   // Users can navigate to their dashboard via the navigation menu
@@ -103,7 +98,7 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 screen-fit">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 screen-fit" suppressHydrationWarning>
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-screen flex items-center content-fit">
         {/* Uber Plastic Background */}
@@ -127,163 +122,134 @@ export default function HomePage() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-center max-w-6xl mx-auto"
-          >
+          <div className="text-center max-w-6xl mx-auto">
             {/* Uber Plastic Logo with African Continent */}
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-              className="mb-12 flex items-center justify-center"
-            >
-              <div className="flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12">
-                {/* Logo Image */}
-                <div className="flex flex-col items-center">
-                  <Image
-                    src="/uber-plastic-logo.png"
-                    alt="Uber Plastic Logo"
-                    width={200}
-                    height={200}
-                    className="rounded-2xl shadow-2xl"
-                  />
+            <div className="mb-12 flex items-center justify-center">
+                <div className="flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8">
+                  {/* Logo Image */}
+                  <div className="flex flex-col items-center">
+                    <Image
+                      src="/uber-plastic-logo.png"
+                      alt="Uber Plastic Logo"
+                      width={200}
+                      height={200}
+                      className="rounded-2xl shadow-2xl"
+                      priority
+                    />
+                  </div>
+                  
+                  {/* Brand Text */}
+                  <div className="text-center lg:text-left">
+                    <h1 className="text-5xl lg:text-7xl font-bold text-white drop-shadow-2xl tracking-tight">
+                      Uber Plastic
+                    </h1>
+                    <p className="text-lg lg:text-xl text-gray-300 mt-3 drop-shadow-lg font-medium">
+                      Sustainable Waste Management
+                    </p>
+                    <p className="text-base text-gray-400 mt-2 max-w-2xl">
+                      Transform waste into value through technology
+                    </p>
+                  </div>
                 </div>
-                
-                {/* Brand Text */}
-                <div className="text-center lg:text-left">
-                  <h1 className="text-5xl lg:text-7xl font-bold text-white drop-shadow-2xl tracking-tight">
-                    Uber Plastic
-                  </h1>
-                  <p className="text-lg lg:text-xl text-gray-300 mt-3 drop-shadow-lg font-medium">
-                    Sustainable Waste Management
-                  </p>
-                  <p className="text-base text-gray-400 mt-2 max-w-2xl">
-                    Transform waste into value through technology
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-            
-            
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="text-lg lg:text-xl text-white mb-8 max-w-4xl mx-auto leading-relaxed font-medium"
-            >
-              Advanced Circular Economy Platform
-            </motion.p>
+            </div>
+              
+              
+              <p className="text-lg lg:text-xl text-white mb-8 max-w-4xl mx-auto leading-relaxed font-medium text-center">
+                Advanced Circular Economy Platform
+              </p>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.1 }}
-              className="bg-gradient-to-r from-gray-800/30 to-gray-700/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8 mb-8 sm:mb-12 w-full max-w-7xl mx-auto border border-gray-600/30"
-            >
-              <div className="text-center">
-                <h3 className="text-lg sm:text-xl lg:text-2xl text-white font-semibold mb-4 sm:mb-6">
-                  Environmental Impact of Plastic Bottle Waste
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 text-center">
-                  <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
-                    <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">Bottles Collected</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-white mb-1">45,000+</p>
-                    <p className="text-xs text-gray-400">Prevented from ocean</p>
-                  </div>
-                  <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
-                    <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">CO₂ Emissions Prevented</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-white mb-1">180 tons</p>
-                    <p className="text-xs text-gray-400">Equivalent to 400 cars</p>
-                  </div>
-                  <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
-                    <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">Ocean Pollution Reduced</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-white mb-1">2.3 tons</p>
-                    <p className="text-xs text-gray-400">Plastic waste diverted</p>
-                  </div>
-                  <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
-                    <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">Energy Saved</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-white mb-1">1.2M kWh</p>
-                    <p className="text-xs text-gray-400">From recycling process</p>
-                  </div>
-                </div>
-                
-                {/* Additional Impact Information */}
-                <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                      <span className="text-lg sm:text-2xl font-bold text-white">500</span>
+              <div className="bg-gradient-to-r from-gray-800/30 to-gray-700/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8 mb-8 sm:mb-12 w-full max-w-7xl mx-auto border border-gray-600/30">
+                <div className="text-center">
+                  <h3 className="text-lg sm:text-xl lg:text-2xl text-white font-semibold mb-4 sm:mb-6">
+                    Environmental Impact of Plastic Bottle Waste
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 text-center">
+                    <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
+                      <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">Bottles Collected</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-white mb-1">45,000+</p>
+                      <p className="text-xs text-gray-400">Prevented from ocean</p>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-300">Years to decompose</p>
-                    <p className="text-xs text-gray-400">Time saved per bottle</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                      <span className="text-lg sm:text-2xl font-bold text-white">3x</span>
+                    <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
+                      <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">CO₂ Emissions Prevented</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-white mb-1">180 tons</p>
+                      <p className="text-xs text-gray-400">Equivalent to 400 cars</p>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-300">More efficient</p>
-                    <p className="text-xs text-gray-400">Than traditional recycling</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                      <span className="text-lg sm:text-2xl font-bold text-white">100%</span>
+                    <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
+                      <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">Ocean Pollution Reduced</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-white mb-1">2.3 tons</p>
+                      <p className="text-xs text-gray-400">Plastic waste diverted</p>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-300">Traceable impact</p>
-                    <p className="text-xs text-gray-400">Every bottle tracked</p>
+                    <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/20">
+                      <p className="text-gray-300 text-xs sm:text-sm mb-1 sm:mb-2">Energy Saved</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-white mb-1">1.2M kWh</p>
+                      <p className="text-xs text-gray-400">From recycling process</p>
+                    </div>
+                  </div>
+                  
+                  {/* Additional Impact Information */}
+                  <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="text-center">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <span className="text-lg sm:text-2xl font-bold text-white">500</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-gray-300">Years to decompose</p>
+                      <p className="text-xs text-gray-400">Time saved per bottle</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <span className="text-lg sm:text-2xl font-bold text-white">3x</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-gray-300">More efficient</p>
+                      <p className="text-xs text-gray-400">Than traditional recycling</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <span className="text-lg sm:text-2xl font-bold text-white">100%</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-gray-300">Traceable impact</p>
+                      <p className="text-xs text-gray-400">Every bottle tracked</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+              
+              {/* Ecosystem CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 px-4">
+                <Link
+                  href="/login"
+                  className="group bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 sm:space-x-3 w-full sm:w-auto"
+                >
+                  <LogIn className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>Access Platform</span>
+                </Link>
+                <Link
+                  href="/insights"
+                  className="group bg-gray-800/40 backdrop-blur-sm text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 sm:space-x-3 border border-gray-600/40 hover:bg-gray-700/40 w-full sm:w-auto"
+                >
+                  <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>View Analytics</span>
+                </Link>
+              </div>
 
-            {/* Ecosystem CTA Buttons */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1 }}
-              className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 px-4"
-            >
-              <Link
-                href="/login"
-                className="group bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 sm:space-x-3 w-full sm:w-auto"
-              >
-                <LogIn className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>Access Platform</span>
-              </Link>
-              <Link
-                href="/insights"
-                className="group bg-gray-800/40 backdrop-blur-sm text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 sm:space-x-3 border border-gray-600/40 hover:bg-gray-700/40 w-full sm:w-auto"
-              >
-                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>View Analytics</span>
-              </Link>
-            </motion.div>
-
-            {/* Plastic Waste Impact Statistics */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto px-4"
-            >
-              <div className="text-center bg-gray-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300">
-                <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-2">2.3 tons</div>
-                <div className="text-white font-medium text-xs sm:text-sm">Plastic Waste Diverted</div>
-                <div className="text-xs text-gray-400 mt-1">From ocean pollution</div>
+              {/* Plastic Waste Impact Statistics */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto px-4 justify-items-center">
+                <div className="text-center bg-gray-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 w-full max-w-xs">
+                  <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-2">2.3 tons</div>
+                  <div className="text-white font-medium text-xs sm:text-sm">Plastic Waste Diverted</div>
+                  <div className="text-xs text-gray-400 mt-1">From ocean pollution</div>
+                </div>
+                <div className="text-center bg-gray-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 w-full max-w-xs">
+                  <div className="text-2xl sm:text-3xl font-bold text-green-500 mb-2">1.2M kWh</div>
+                  <div className="text-white font-medium text-xs sm:text-sm">Energy Saved</div>
+                  <div className="text-xs text-gray-400 mt-1">Through recycling</div>
+                </div>
+                <div className="text-center bg-gray-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 w-full max-w-xs sm:col-span-2 lg:col-span-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">500 years</div>
+                  <div className="text-white font-medium text-xs sm:text-sm">Decomposition Time</div>
+                  <div className="text-xs text-gray-400 mt-1">Saved per bottle</div>
+                </div>
               </div>
-              <div className="text-center bg-gray-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300">
-                <div className="text-2xl sm:text-3xl font-bold text-green-500 mb-2">1.2M kWh</div>
-                <div className="text-white font-medium text-xs sm:text-sm">Energy Saved</div>
-                <div className="text-xs text-gray-400 mt-1">Through recycling</div>
-              </div>
-              <div className="text-center bg-gray-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 sm:col-span-2 lg:col-span-1">
-                <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">500 years</div>
-                <div className="text-white font-medium text-xs sm:text-sm">Decomposition Time</div>
-                <div className="text-xs text-gray-400 mt-1">Saved per bottle</div>
-              </div>
-            </motion.div>
-          </motion.div>
+            </div>
         </div>
       </section>
 
@@ -295,6 +261,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
+            suppressHydrationWarning
           >
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-green-500 via-green-600 to-green-700 bg-clip-text text-transparent">
               Platform Features
@@ -304,7 +271,7 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
             {features.map((feature, index) => {
               const Icon = feature.icon
               return (
@@ -314,9 +281,10 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="group relative"
+                  suppressHydrationWarning
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-green-600/5 to-green-700/5 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-gray-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2 border border-gray-600 text-center">
+                  <div className="relative bg-gray-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2 border border-gray-600 text-center w-full max-w-sm">
                     <div className={`bg-gradient-to-r ${feature.color} p-6 rounded-3xl w-20 h-20 mx-auto mb-6 flex-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
                       <Icon className="h-10 w-10 text-white" />
                     </div>
@@ -352,7 +320,7 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
             {userTypes.map((type, index) => {
               const Icon = type.icon
               return (
@@ -364,7 +332,7 @@ export default function HomePage() {
                   className="group relative"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-teal-500/20 to-blue-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 transform group-hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+                  <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 transform group-hover:-translate-y-2 border border-gray-100 dark:border-gray-700 w-full max-w-sm">
                     <div className="text-center">
                       <div className={`bg-gradient-to-r ${type.color} p-6 rounded-3xl w-20 h-20 mx-auto mb-6 flex-center shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110`}>
                         <Icon className="h-10 w-10 text-white" />

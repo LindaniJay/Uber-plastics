@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Recycle, 
@@ -12,8 +13,6 @@ import {
   Zap,
   Trophy,
   Star,
-  Camera,
-  Coins,
   DollarSign,
   MapPin,
   Clock,
@@ -21,17 +20,21 @@ import {
   Home,
   BarChart3,
   Globe,
-  ArrowRight
+  ArrowRight,
+  Sparkles,
+  Activity,
+  Flame,
+  Heart,
+  Lightbulb,
+  Plus,
+  Scan
 } from 'lucide-react'
 import { StatsCard } from '@/components/dashboard/StatsCard'
 import { AchievementCard } from '@/components/dashboard/AchievementCard'
-import { ProgressRing } from '@/components/dashboard/ProgressRing'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useEcoTrackStore } from '@/store/useEcoTrackStore'
-import { CameraScanner } from '@/components/ai/CameraScanner'
-import { useState } from 'react'
 import Link from 'next/link'
 
 export default function IndividualDashboard() {
@@ -46,11 +49,26 @@ function IndividualDashboardContent() {
   const { user } = useAuth()
   const { darkMode } = useTheme()
   const { userStats, getTodayScans, getWeeklyStats, getRecentScans } = useEcoTrackStore()
-  const [showScanner, setShowScanner] = useState(false)
+  const [formattedScans, setFormattedScans] = useState<Array<{ bottles: number; timestamp: number; earnings: number; co2Saved: number; polyMoney: number; formattedDate: string }>>([])
+  const [mounted, setMounted] = useState(false)
 
   const todayScans = getTodayScans()
   const weeklyStats = getWeeklyStats()
   const recentScans = getRecentScans(5)
+
+  useEffect(() => {
+    setMounted(true)
+    setFormattedScans(recentScans.map(scan => ({
+      ...scan,
+      formattedDate: new Date(scan.timestamp).toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    })))
+  }, [recentScans])
 
   const stats = [
     {
@@ -75,7 +93,7 @@ function IndividualDashboardContent() {
       value: userStats.totalPolyMoney,
       change: `+${todayScans.reduce((acc, scan) => acc + scan.polyMoney, 0)} today`,
       changeType: 'positive' as const,
-      color: 'from-blue-500 to-green-500'
+      color: 'from-blue-500 to-purple-600'
     },
     {
       icon: DollarSign,
@@ -83,7 +101,7 @@ function IndividualDashboardContent() {
       value: `STN ${userStats.totalEarnings.toFixed(2)}`,
       change: `+STN ${todayScans.reduce((acc, scan) => acc + scan.earnings, 0).toFixed(2)} today`,
       changeType: 'positive' as const,
-      color: 'from-green-500 to-emerald-600'
+      color: 'from-emerald-500 to-green-600'
     }
   ]
 
@@ -127,9 +145,9 @@ function IndividualDashboardContent() {
   ]
 
   const weeklyGoals = [
-    { name: 'Bottles', current: weeklyStats.bottles, target: 20, color: 'from-green-500 to-emerald-600' },
-    { name: 'Points', current: weeklyStats.points, target: 100, color: 'from-yellow-500 to-orange-600' },
-    { name: 'Streak', current: weeklyStats.streak, target: 7, color: 'from-blue-500 to-purple-600' }
+    { name: 'Bottles', current: weeklyStats.bottles, target: 20, color: 'from-green-500 to-emerald-600', icon: Recycle },
+    { name: 'Points', current: weeklyStats.points, target: 100, color: 'from-yellow-500 to-orange-600', icon: Star },
+    { name: 'Streak', current: weeklyStats.streak, target: 7, color: 'from-blue-500 to-purple-600', icon: Flame }
   ]
 
   const rewards = [
@@ -168,42 +186,6 @@ function IndividualDashboardContent() {
       available: userStats.totalPoints >= 150,
       category: 'Shopping',
       expiry: '60 days'
-    },
-    {
-      title: 'Restaurant Voucher',
-      description: '15% off at eco-friendly restaurants',
-      points: 80,
-      icon: '🍽️',
-      available: userStats.totalPoints >= 80,
-      category: 'Food & Beverage',
-      expiry: '45 days'
-    },
-    {
-      title: 'Gym Membership',
-      description: '1 month free gym access',
-      points: 300,
-      icon: '💪',
-      available: userStats.totalPoints >= 300,
-      category: 'Health & Fitness',
-      expiry: '120 days'
-    },
-    {
-      title: 'Movie Tickets',
-      description: '2 free cinema tickets',
-      points: 120,
-      icon: '🎬',
-      available: userStats.totalPoints >= 120,
-      category: 'Entertainment',
-      expiry: '30 days'
-    },
-    {
-      title: 'Eco Workshop',
-      description: 'Free sustainability workshop',
-      points: 180,
-      icon: '🎓',
-      available: userStats.totalPoints >= 180,
-      category: 'Education',
-      expiry: '90 days'
     }
   ]
 
@@ -252,18 +234,6 @@ function IndividualDashboardContent() {
       tip: 'Rinse containers before recycling to prevent contamination.',
       impact: 'Increases recycling efficiency by 40%',
       icon: '♻️'
-    },
-    {
-      title: 'Composting',
-      tip: 'Start a small compost bin for organic waste.',
-      impact: 'Reduces household waste by 30%',
-      icon: '🌱'
-    },
-    {
-      title: 'Energy Conservation',
-      tip: 'Use LED bulbs and unplug devices when not in use.',
-      impact: 'Saves 20% on electricity bills',
-      icon: '💡'
     }
   ]
 
@@ -292,323 +262,412 @@ function IndividualDashboardContent() {
       location: 'Centro Cultural',
       participants: 28,
       organizer: 'Green Education Center'
-    },
-    {
-      title: 'Sustainability Fair',
-      date: '2024-01-22',
-      time: '10:00 AM',
-      location: 'Parque Municipal',
-      participants: 120,
-      organizer: 'City Council'
     }
   ]
 
-  const handleScanComplete = (results: any) => {
-    setShowScanner(false)
-    // Results are automatically saved to the store
-    // Force a re-render to show updated stats
-    window.location.reload()
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
   }
 
   return (
-    <ProtectedRoute allowedRoles={['individual']}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <div className="container py-8">
-        {/* Header */}
+    <div className={`min-h-screen ${darkMode ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'}`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
+        {/* Hero Header Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8"
+          className="mb-8 lg:mb-12"
         >
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
-            Welcome back, {user?.name || 'Eco Warrior'}! 🌱
-          </h1>
-          <p className="text-lg text-blue-100">
-            Keep up the great work! Every bottle makes a difference.
-          </p>
-        </motion.div>
-
-        {/* Navigation Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Home Navigation */}
-            <Link
-              href="/"
-              className="card hover:scale-105 transition-all duration-300 group"
-            >
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl">
-                  <Home className="w-6 h-6 text-white" />
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className={`p-2 rounded-lg ${darkMode ? 'bg-green-500/20' : 'bg-green-100'}`}>
+                  <Sparkles className={`h-5 w-5 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white group-hover:text-blue-300">
-                    Home
-                  </h3>
-                  <p className="text-sm text-blue-200">
-                    Back to main page
-                  </p>
-                </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-500 ml-auto" />
+                <span className={`text-sm font-medium ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
+                  Eco Champion
+                </span>
               </div>
-            </Link>
-
-            {/* Eco Insights Navigation */}
-            <Link
-              href="/insights"
-              className="card hover:scale-105 transition-all duration-300 group"
-            >
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl">
-                  <BarChart3 className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white group-hover:text-green-300">
-                    Eco Insights
-                  </h3>
-                  <p className="text-sm text-blue-200">
-                    Environmental data & analytics
-                  </p>
-                </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-green-500 ml-auto" />
-              </div>
-            </Link>
-
-            {/* Global Impact Navigation */}
-            <Link
-              href="/insights"
-              className="card hover:scale-105 transition-all duration-300 group"
-            >
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl">
-                  <Globe className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white group-hover:text-blue-300">
-                    Global Impact
-                  </h3>
-                  <p className="text-sm text-blue-200">
-                    Worldwide sustainability data
-                  </p>
-                </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-teal-500 ml-auto" />
-              </div>
-            </Link>
+              <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                Welcome back, {user?.name || 'Eco Warrior'}! 🌱
+              </h1>
+              <p className={`text-base md:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                Keep up the great work! Every bottle makes a difference.
+              </p>
+            </div>
+            
+            {/* Quick Navigation Pills */}
+            <div className="flex flex-wrap gap-2 relative z-10">
+              <Link
+                href="/"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                  darkMode 
+                    ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20' 
+                    : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 shadow-sm'
+                }`}
+              >
+                <Home className="h-4 w-4" />
+                Home
+              </Link>
+              <Link
+                href="/insights"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                  darkMode 
+                    ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20' 
+                    : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 shadow-sm'
+                }`}
+              >
+                <BarChart3 className="h-4 w-4" />
+                Insights
+              </Link>
+              <Link
+                href="/individual/log-plastic"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                  darkMode 
+                    ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 text-green-400 border border-green-500/30' 
+                    : 'bg-gradient-to-r from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 text-green-700 border border-green-200'
+                }`}
+              >
+                <Plus className="h-4 w-4" />
+                Log Plastic
+              </Link>
+              <Link
+                href="/individual/rewards"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                  darkMode 
+                    ? 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 hover:from-yellow-500/30 hover:to-orange-500/30 text-yellow-400 border border-yellow-500/30' 
+                    : 'bg-gradient-to-r from-yellow-100 to-orange-100 hover:from-yellow-200 hover:to-orange-200 text-orange-700 border border-yellow-200'
+                }`}
+              >
+                <Award className="h-4 w-4" />
+                Rewards
+              </Link>
+            </div>
           </div>
         </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Stats Grid - Modern Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8"
+        >
           {stats.map((stat, index) => (
-            <motion.div
-              key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <StatsCard {...stat} />
+            <motion.div key={stat.title} variants={itemVariants}>
+              <StatsCard {...stat} delay={index * 0.1} />
             </motion.div>
           ))}
-        </div>
-
-        {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="card mb-8"
-        >
-          <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <button
-              onClick={() => setShowScanner(true)}
-              className="btn-primary group"
-            >
-              <Camera className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-              AI Scanner
-            </button>
-            <Link
-              href="/individual/log-plastic"
-              className="btn-secondary group"
-            >
-              <Recycle className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-              Log Plastic
-            </Link>
-            <Link
-              href="/individual/rewards"
-              className="btn-eco group"
-            >
-              <Award className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-              View Rewards
-            </Link>
-            <Link
-              href="/individual/leaderboard"
-              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 cursor-pointer inline-flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
-            >
-              <Trophy className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-              Leaderboard
-            </Link>
-          </div>
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Achievements & Progress */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Achievements */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Quick Actions - Redesigned */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="card"
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Achievements
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {achievements.map((achievement, index) => (
-                  <AchievementCard key={achievement.title} {...achievement} />
-                ))}
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl lg:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Quick Actions
+                </h2>
+                <Zap className={`h-5 w-5 ${darkMode ? 'text-yellow-400' : 'text-yellow-500'}`} />
               </div>
-            </motion.div>
-
-            {/* Weekly Progress */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="card"
-            >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Weekly Progress
-              </h2>
-              <div className="space-y-4">
-                {weeklyGoals.map((goal, index) => (
-                  <div key={goal.name} className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className={`font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                        {goal.name}
-                      </span>
-                      <span className={`font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {goal.current}/{goal.target}
-                      </span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Link
+                  href="/individual/log-plastic"
+                  className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 cursor-pointer ${
+                    darkMode
+                      ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 border border-green-500/30'
+                      : 'bg-gradient-to-br from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 border border-green-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`p-3 rounded-xl ${darkMode ? 'bg-green-500/20' : 'bg-green-100'}`}>
+                      <Plus className={`h-6 w-6 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(goal.current / goal.target) * 100}%` }}
-                        transition={{ duration: 1, delay: 1 + index * 0.2 }}
-                        className={`h-3 rounded-full bg-gradient-to-r ${goal.color}`}
-                      />
+                    <div>
+                      <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        Log Plastic
+                      </h3>
+                      <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        Record collection
+                      </p>
                     </div>
                   </div>
+                </Link>
+                <Link
+                  href="/individual/rewards"
+                  className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 cursor-pointer ${
+                    darkMode
+                      ? 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20 hover:from-yellow-500/30 hover:to-orange-500/30 border border-yellow-500/30'
+                      : 'bg-gradient-to-br from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border border-yellow-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`p-3 rounded-xl ${darkMode ? 'bg-yellow-500/20' : 'bg-yellow-100'}`}>
+                      <Award className={`h-6 w-6 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`} />
+                    </div>
+                    <div>
+                      <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        View Rewards
+                      </h3>
+                      <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        Claim your prizes
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link
+                  href="/individual/leaderboard"
+                  className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 cursor-pointer ${
+                    darkMode
+                      ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 border border-purple-500/30'
+                      : 'bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border border-purple-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`p-3 rounded-xl ${darkMode ? 'bg-purple-500/20' : 'bg-purple-100'}`}>
+                      <Trophy className={`h-6 w-6 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+                    </div>
+                    <div>
+                      <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        Leaderboard
+                      </h3>
+                      <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        See your rank
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Achievements - Modern Design */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl lg:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Achievements
+                </h2>
+                <Trophy className={`h-5 w-5 ${darkMode ? 'text-yellow-400' : 'text-yellow-500'}`} />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {achievements.map((achievement, index) => (
+                  <AchievementCard key={achievement.title} {...achievement} delay={index * 0.1} />
                 ))}
               </div>
             </motion.div>
 
-            {/* Recent Scans */}
+            {/* Weekly Progress - Enhanced */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="card"
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Recent Scans
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl lg:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Weekly Progress
+                </h2>
+                <Activity className={`h-5 w-5 ${darkMode ? 'text-blue-400' : 'text-blue-500'}`} />
+              </div>
+              <div className="space-y-6">
+                {weeklyGoals.map((goal, index) => {
+                  const Icon = goal.icon
+                  const percentage = Math.min((goal.current / goal.target) * 100, 100)
+                  return (
+                    <div key={goal.name} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg bg-gradient-to-r ${goal.color} bg-opacity-10`}>
+                            <Icon className={`h-4 w-4 ${darkMode ? 'text-white' : 'text-gray-700'}`} />
+                          </div>
+                          <span className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {goal.name}
+                          </span>
+                        </div>
+                        <span className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {goal.current}/{goal.target}
+                        </span>
+                      </div>
+                      <div className={`relative w-full h-3 rounded-full overflow-hidden ${
+                        darkMode ? 'bg-gray-700/50' : 'bg-gray-200'
+                      }`}>
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${percentage}%` }}
+                          transition={{ duration: 1, delay: 1 + index * 0.2 }}
+                          className={`h-full rounded-full bg-gradient-to-r ${goal.color} shadow-lg`}
+                        />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </motion.div>
+
+            {/* Recent Scans - Modern List */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl lg:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Recent Scans
+                </h2>
+                <Recycle className={`h-5 w-5 ${darkMode ? 'text-green-400' : 'text-green-500'}`} />
+              </div>
               <div className="space-y-3">
-                {recentScans.map((scan, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                        <Recycle className="h-4 w-4 text-white" />
+                {(mounted && formattedScans.length > 0 ? formattedScans : recentScans.map(scan => ({ ...scan, formattedDate: '' }))).map((scan, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.2 + index * 0.1 }}
+                    className={`flex items-center justify-between p-4 rounded-2xl transition-all duration-300 ${
+                      darkMode
+                        ? 'bg-gray-700/50 hover:bg-gray-700 border border-gray-600/50'
+                        : 'bg-gray-50 hover:bg-gray-100 border border-gray-200'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600`}>
+                        <Recycle className="h-5 w-5 text-white" />
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900 dark:text-white">
-                          {scan.bottles} bottles collected
+                        <div className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {scan.bottles} {scan.bottles === 1 ? 'bottle' : 'bottles'} collected
                         </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {new Date(scan.timestamp).toLocaleDateString()}
+                        <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          {scan.formattedDate || (mounted ? 'Processing...' : '')}
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold text-green-600">
-                        +{scan.points} pts
+                      <div className={`font-bold text-lg ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
+                        +{scan.bottles * 5} pts
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        STN ${scan.earnings.toFixed(2)}
+                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                        STN {scan.earnings.toFixed(2)}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Right Column - Rewards & Impact */}
-          <div className="space-y-8">
-            {/* Rewards Widget */}
+          {/* Right Sidebar */}
+          <div className="space-y-6">
+            {/* Available Rewards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="card"
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Available Rewards
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Available Rewards
+                </h2>
+                <Gift className={`h-5 w-5 ${darkMode ? 'text-yellow-400' : 'text-yellow-500'}`} />
+              </div>
               <div className="space-y-3">
                 {rewards.map((reward, index) => (
-                  <div
+                  <motion.div
                     key={reward.title}
-                    className={`p-4 rounded-lg border-2 transition-all duration-300 ${
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.8 + index * 0.1 }}
+                    className={`p-4 rounded-2xl border-2 transition-all duration-300 ${
                       reward.available
-                        ? 'border-green-200 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
-                        : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
+                        ? darkMode
+                          ? 'border-green-500/50 bg-green-500/10 hover:bg-green-500/20'
+                          : 'border-green-200 bg-green-50 hover:bg-green-100'
+                        : darkMode
+                          ? 'border-gray-600/50 bg-gray-700/30'
+                          : 'border-gray-200 bg-gray-50'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3 flex-1">
                         <span className="text-2xl">{reward.icon}</span>
-                        <div>
-                          <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className="flex-1 min-w-0">
+                          <div className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                             {reward.title}
                           </div>
-                          <div className="text-sm text-gray-600 dark:text-gray-300">
+                          <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                             {reward.description}
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-bold text-yellow-600">
+                      <div className="text-right flex-shrink-0">
+                        <div className={`font-bold ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`}>
                           {reward.points} pts
                         </div>
-                        <div className="text-xs text-gray-500 mb-1">
-                          {reward.category}
-                        </div>
-                        <div className="text-xs text-gray-400 mb-2">
-                          Expires in {reward.expiry}
-                        </div>
                         {reward.available ? (
-                          <button className="text-xs bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition-colors duration-200">
+                          <button className={`mt-2 text-xs px-3 py-1 rounded-lg font-medium transition-all duration-300 ${
+                            darkMode
+                              ? 'bg-green-500/20 hover:bg-green-500/30 text-green-400 border border-green-500/50'
+                              : 'bg-green-500 hover:bg-green-600 text-white'
+                          }`}>
                             Redeem
                           </button>
                         ) : (
-                          <div className="text-xs text-gray-500">
-                            Need {reward.points - userStats.totalPoints} more pts
+                          <div className={`mt-2 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                            Need {reward.points - userStats.totalPoints} more
                           </div>
                         )}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -617,35 +676,44 @@ function IndividualDashboardContent() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="card"
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/30 shadow-2xl' 
+                  : 'bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Environmental Impact
-              </h2>
-              <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-6">
+                <Leaf className={`h-5 w-5 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Environmental Impact
+                </h2>
+              </div>
+              <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">
+                  <div className={`text-4xl font-bold mb-2 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
                     {userStats.totalCo2Saved.toFixed(1)}kg
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
+                  <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     CO₂ Saved
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
-                    {Math.round(userStats.totalCo2Saved * 1000 / 0.5)}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <div className={`text-2xl font-bold mb-1 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                      {Math.round(userStats.totalCo2Saved * 1000 / 0.5)}
+                    </div>
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Bottles Equivalent
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Plastic Bottles Equivalent
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-teal-600 mb-2">
-                    {Math.round(userStats.totalCo2Saved * 2.5)}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Trees Planted Equivalent
+                  <div className="text-center">
+                    <div className={`text-2xl font-bold mb-1 ${darkMode ? 'text-teal-400' : 'text-teal-600'}`}>
+                      {Math.round(userStats.totalCo2Saved * 2.5)}
+                    </div>
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Trees Equivalent
+                    </div>
                   </div>
                 </div>
               </div>
@@ -655,140 +723,176 @@ function IndividualDashboardContent() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-              className="card"
+              transition={{ delay: 1.1, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Weekly Challenges
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Weekly Challenges
+                </h2>
+                <Target className={`h-5 w-5 ${darkMode ? 'text-blue-400' : 'text-blue-500'}`} />
+              </div>
               <div className="space-y-4">
-                {weeklyChallenges.map((challenge) => (
-                  <div
-                    key={challenge.id}
-                    className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-300 dark:hover:border-green-600 transition-all duration-300"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">
-                          {challenge.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {challenge.description}
-                        </p>
-                      </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        challenge.difficulty === 'easy' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                        challenge.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                      }`}>
-                        {challenge.difficulty}
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Progress</span>
-                        <span className="text-gray-900 dark:text-white">{challenge.progress}/{challenge.target}</span>
-                      </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div 
-                          className="h-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"
-                          style={{ width: `${(challenge.progress / challenge.target) * 100}%` }}
-                        />
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-green-600 dark:text-green-400 font-medium">
-                          Reward: {challenge.reward}
-                        </span>
-                        <span className="text-gray-500 dark:text-gray-400">
-                          {challenge.deadline}
+                {weeklyChallenges.map((challenge) => {
+                  const progressPercentage = Math.min((challenge.progress / challenge.target) * 100, 100)
+                  return (
+                    <div
+                      key={challenge.id}
+                      className={`p-4 rounded-2xl border transition-all duration-300 ${
+                        darkMode
+                          ? 'border-gray-600/50 bg-gray-700/30 hover:border-green-500/50'
+                          : 'border-gray-200 bg-gray-50 hover:border-green-300'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {challenge.title}
+                          </h3>
+                          <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                            {challenge.description}
+                          </p>
+                        </div>
+                        <span className={`px-2 py-1 rounded-lg text-xs font-medium ${
+                          challenge.difficulty === 'easy' 
+                            ? darkMode
+                              ? 'bg-green-500/20 text-green-400'
+                              : 'bg-green-100 text-green-700'
+                            : challenge.difficulty === 'medium'
+                              ? darkMode
+                                ? 'bg-yellow-500/20 text-yellow-400'
+                                : 'bg-yellow-100 text-yellow-700'
+                              : darkMode
+                                ? 'bg-red-500/20 text-red-400'
+                                : 'bg-red-100 text-red-700'
+                        }`}>
+                          {challenge.difficulty}
                         </span>
                       </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>Progress</span>
+                          <span className={darkMode ? 'text-white' : 'text-gray-900'}>{challenge.progress}/{challenge.target}</span>
+                        </div>
+                        <div className={`w-full h-2 rounded-full overflow-hidden ${
+                          darkMode ? 'bg-gray-700/50' : 'bg-gray-200'
+                        }`}>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progressPercentage}%` }}
+                            transition={{ duration: 1 }}
+                            className="h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-600"
+                          />
+                        </div>
+                        <div className="flex justify-between text-xs">
+                          <span className={`font-medium ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
+                            Reward: {challenge.reward}
+                          </span>
+                          <span className={darkMode ? 'text-gray-500' : 'text-gray-500'}>
+                            {challenge.deadline}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </motion.div>
 
-            {/* Community Stats */}
+            {/* Community Impact */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-              className="card"
+              transition={{ delay: 1.2, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30 shadow-2xl' 
+                  : 'bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Community Impact
-              </h2>
+              <div className="flex items-center gap-2 mb-6">
+                <Users className={`h-5 w-5 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Community Impact
+                </h2>
+              </div>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">
+                    <div className={`text-2xl font-bold mb-1 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
                       {communityStats.totalUsers.toLocaleString()}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                    <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                       Active Users
                     </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600 mb-1">
+                    <div className={`text-2xl font-bold mb-1 ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
                       {communityStats.totalBottlesCollected.toLocaleString()}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                    <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                       Bottles Collected
                     </div>
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-teal-600 mb-1">
-                    {communityStats.totalCo2Saved.toFixed(1)}kg
+                <div className={`text-center p-4 rounded-2xl ${
+                  darkMode ? 'bg-white/5 border border-white/10' : 'bg-white/50 border border-gray-200'
+                }`}>
+                  <div className={`text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Your Community Rank
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Total CO₂ Saved
+                  <div className={`text-3xl font-bold mb-1 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`}>
+                    #{communityStats.communityRank}
                   </div>
-                </div>
-                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <div className="text-center">
-                    <div className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                      Your Community Rank
-                    </div>
-                    <div className="text-3xl font-bold text-purple-600">
-                      #{communityStats.communityRank}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      out of {communityStats.totalUsers} users
-                    </div>
+                  <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                    out of {communityStats.totalUsers} users
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Environmental Tips */}
+            {/* Eco Tips */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.3 }}
-              className="card"
+              transition={{ delay: 1.3, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Eco Tips
-              </h2>
-              <div className="space-y-3">
+              <div className="flex items-center gap-2 mb-6">
+                <Lightbulb className={`h-5 w-5 ${darkMode ? 'text-yellow-400' : 'text-yellow-500'}`} />
+                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Eco Tips
+                </h2>
+              </div>
+              <div className="space-y-4">
                 {environmentalTips.map((tip, index) => (
                   <div
                     key={index}
-                    className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                    className={`p-4 rounded-2xl transition-colors duration-200 ${
+                      darkMode
+                        ? 'bg-gray-700/50 hover:bg-gray-700'
+                        : 'bg-gray-50 hover:bg-gray-100'
+                    }`}
                   >
-                    <div className="flex items-start space-x-3">
+                    <div className="flex items-start gap-3">
                       <span className="text-2xl">{tip.icon}</span>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                        <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {tip.title}
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                           {tip.tip}
                         </p>
-                        <div className="text-xs text-green-600 dark:text-green-400 font-medium">
-                          Impact: {tip.impact}
+                        <div className={`text-xs font-medium ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
+                          💡 Impact: {tip.impact}
                         </div>
                       </div>
                     </div>
@@ -801,44 +905,59 @@ function IndividualDashboardContent() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.4 }}
-              className="card"
+              transition={{ delay: 1.4, duration: 0.6 }}
+              className={`rounded-3xl p-6 lg:p-8 ${
+                darkMode 
+                  ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                  : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+              }`}
             >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Upcoming Events
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Upcoming Events
+                </h2>
+                <Calendar className={`h-5 w-5 ${darkMode ? 'text-blue-400' : 'text-blue-500'}`} />
+              </div>
               <div className="space-y-3">
                 {upcomingEvents.map((event, index) => (
                   <div
                     key={index}
-                    className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300"
+                    className={`p-4 rounded-2xl border transition-all duration-300 ${
+                      darkMode
+                        ? 'border-gray-600/50 bg-gray-700/30 hover:border-blue-500/50'
+                        : 'border-gray-200 bg-gray-50 hover:border-blue-300'
+                    }`}
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between gap-3">
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                        <h3 className={`font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {event.title}
                         </h3>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                          <div className="flex items-center space-x-2">
-                            <Calendar className="w-4 h-4" />
+                        <div className={`text-sm space-y-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                          <div className="flex items-center gap-2">
+                            <Clock className="h-3 w-3" />
                             <span>{event.date} at {event.time}</span>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <MapPin className="w-4 h-4" />
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-3 w-3" />
                             <span>{event.location}</span>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <Users className="w-4 h-4" />
+                          <div className="flex items-center gap-2">
+                            <Users className="h-3 w-3" />
                             <span>{event.participants} participants</span>
                           </div>
                         </div>
+                        <div className={`text-xs mt-2 ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>
+                          by {event.organizer}
+                        </div>
                       </div>
-                      <button className="ml-4 px-3 py-1 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                      <button className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 ${
+                        darkMode
+                          ? 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/50'
+                          : 'bg-blue-500 hover:bg-blue-600 text-white'
+                      }`}>
                         Join
                       </button>
-                    </div>
-                    <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                      Organized by {event.organizer}
                     </div>
                   </div>
                 ))}
@@ -847,15 +966,6 @@ function IndividualDashboardContent() {
           </div>
         </div>
       </div>
-
-      {/* Camera Scanner Modal */}
-      {showScanner && (
-        <CameraScanner
-          onClose={() => setShowScanner(false)}
-          onScanComplete={handleScanComplete}
-        />
-      )}
-      </div>
-    </ProtectedRoute>
+    </div>
   )
 }

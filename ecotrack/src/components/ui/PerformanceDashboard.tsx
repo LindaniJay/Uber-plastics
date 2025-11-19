@@ -30,8 +30,6 @@ interface PerformanceDashboardProps {
 }
 
 export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboardProps) {
-  // Only show in development
-  if (!shouldShowPerformanceDashboard) return null
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     fcp: null,
     lcp: null,
@@ -140,6 +138,9 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
     return <X className="w-4 h-4 text-red-500" />
   }
 
+  // Only show in development
+  if (!shouldShowPerformanceDashboard) return null
+  
   if (!isVisible) return null
 
   return (
@@ -148,7 +149,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        className="fixed bottom-4 right-4 w-96 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50"
+        className="fixed bottom-4 right-4 w-96 glass-modal rounded-lg z-50"
       >
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
@@ -166,8 +167,8 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
 
           <div className="space-y-3">
             {/* Core Web Vitals */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 glass-card rounded-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium">FCP</span>
                   {getScoreIcon(metrics.fcp || 0, { good: 1800, needsImprovement: 3000 })}
@@ -178,7 +179,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
                 <div className="text-xs text-gray-500">First Contentful Paint</div>
               </div>
 
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="p-3 glass-card rounded-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium">LCP</span>
                   {getScoreIcon(metrics.lcp || 0, { good: 2500, needsImprovement: 4000 })}
@@ -189,7 +190,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
                 <div className="text-xs text-gray-500">Largest Contentful Paint</div>
               </div>
 
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="p-3 glass-card rounded-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium">FID</span>
                   {getScoreIcon(metrics.fid || 0, { good: 100, needsImprovement: 300 })}
@@ -200,7 +201,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
                 <div className="text-xs text-gray-500">First Input Delay</div>
               </div>
 
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="p-3 glass-card rounded-lg">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-medium">CLS</span>
                   {getScoreIcon((metrics.cls || 0) * 1000, { good: 100, needsImprovement: 250 })}
@@ -214,7 +215,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
 
             {/* Additional Metrics */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="p-3 glass-card rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
                   <Clock className="w-4 h-4 text-blue-500" />
                   <span className="text-sm font-medium">TTFB</span>
@@ -225,7 +226,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
                 <div className="text-xs text-gray-500">Time to First Byte</div>
               </div>
 
-              <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="p-3 glass-card rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
                   <Zap className="w-4 h-4 text-green-500" />
                   <span className="text-sm font-medium">API</span>
@@ -238,7 +239,7 @@ export function PerformanceDashboard({ isVisible, onClose }: PerformanceDashboar
             </div>
 
             {/* Cache Performance */}
-            <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="p-3 glass-card rounded-lg">
               <div className="flex items-center gap-2 mb-1">
                 <TrendingUp className="w-4 h-4 text-purple-500" />
                 <span className="text-sm font-medium">Cache Hit Rate</span>

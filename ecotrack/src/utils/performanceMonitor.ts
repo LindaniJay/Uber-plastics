@@ -1,7 +1,7 @@
 
 // Performance monitoring utilities
 export const performanceMonitor = {
-  measure: (name, fn) => {
+  measure: (name: string, fn: () => any) => {
     const start = performance.now()
     const result = fn()
     const end = performance.now()
@@ -9,7 +9,7 @@ export const performanceMonitor = {
     return result
   },
   
-  measureAsync: async (name, fn) => {
+  measureAsync: async (name: string, fn: () => Promise<any>) => {
     const start = performance.now()
     const result = await fn()
     const end = performance.now()
@@ -17,7 +17,7 @@ export const performanceMonitor = {
     return result
   },
   
-  reportWebVitals: (metric) => {
+  reportWebVitals: (metric: any) => {
     console.log('📊 Web Vitals:', metric)
   }
 }

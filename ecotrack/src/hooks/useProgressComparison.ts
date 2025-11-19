@@ -1,6 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import caboVerdeData from '@/data/cabo_verde_real_data.json'
 import saoTomeData from '@/data/sao_tome_real_data.json'
+import zanzibarData from '@/data/zanzibar_real_data.json'
+import seychellesData from '@/data/seychelles_real_data.json'
+import comorosData from '@/data/comoros_real_data.json'
+import madagascarData from '@/data/madagascar_real_data.json'
 
 export interface DepotData {
   totalProcessed: number
@@ -37,12 +41,18 @@ export interface CountryComparison {
   recyclingValue: number
 }
 
-export function useProgressComparison(selectedRegion: 'cabo-verde' | 'sao-tome', depotData: DepotData) {
-  const [isLoading, setIsLoading] = useState(true)
+export function useProgressComparison(selectedRegion: 'cabo-verde' | 'sao-tome' | 'zanzibar' | 'seychelles' | 'comoros' | 'madagascar', depotData: DepotData) {
   const [error, setError] = useState<string | null>(null)
+  const isLoading = false // Remove artificial loading delay
 
   const currentData = useMemo(() => {
-    return selectedRegion === 'cabo-verde' ? caboVerdeData : saoTomeData as any
+    return selectedRegion === 'cabo-verde' ? caboVerdeData :
+           selectedRegion === 'sao-tome' ? saoTomeData :
+           selectedRegion === 'zanzibar' ? zanzibarData :
+           selectedRegion === 'seychelles' ? seychellesData :
+           selectedRegion === 'comoros' ? comorosData :
+           selectedRegion === 'madagascar' ? madagascarData :
+           caboVerdeData as any
   }, [selectedRegion])
 
   const countryComparison = useMemo((): CountryComparison => {
@@ -197,13 +207,21 @@ export function useProgressComparison(selectedRegion: 'cabo-verde' | 'sao-tome',
 
   const trends = useMemo(() => {
     // Mock trend data - in real implementation, this would come from historical data
-    const generateTrend = (current: number, volatility: number = 0.1) => {
+    // Use deterministic pseudo-random based on seed to avoid hydration mismatch
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000
+      return x - Math.floor(x)
+    }
+    
+    const generateTrend = (current: number, volatility: number = 0.1, seed: number = 0) => {
       const days = 30
       const trend = []
       let value = current * 0.8 // Start 20% lower
       
       for (let i = 0; i < days; i++) {
-        value += (current - value) / (days - i) + (Math.random() - 0.5) * volatility * current
+        // Use seeded random instead of Math.random() for consistency
+        const randomValue = seededRandom(seed + i) - 0.5
+        value += (current - value) / (days - i) + randomValue * volatility * current
         trend.push(Math.max(0, value))
       }
       
@@ -211,20 +229,12 @@ export function useProgressComparison(selectedRegion: 'cabo-verde' | 'sao-tome',
     }
     
     return {
-      bottlesCollected: generateTrend(depotData.totalProcessed, 0.15),
-      co2Saved: generateTrend(depotData.co2Saved, 0.1),
-      efficiency: generateTrend(depotData.processingEfficiency, 0.05),
-      value: generateTrend(depotData.totalValue, 0.2)
+      bottlesCollected: generateTrend(depotData.totalProcessed, 0.15, depotData.totalProcessed),
+      co2Saved: generateTrend(depotData.co2Saved, 0.1, depotData.co2Saved * 100),
+      efficiency: generateTrend(depotData.processingEfficiency, 0.05, depotData.processingEfficiency * 100),
+      value: generateTrend(depotData.totalValue, 0.2, depotData.totalValue * 100)
     }
   }, [depotData])
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-    
-    return () => clearTimeout(timer)
-  }, [])
 
   return {
     isLoading,

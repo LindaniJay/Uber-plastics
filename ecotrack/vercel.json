@@ -4,11 +4,8 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "outputDirectory": ".next",
-  "functions": {
-    "src/app/api/**/*.ts": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    }
+  "env": {
+    "NEXT_PUBLIC_DEMO_MODE": "true"
   },
   "headers": [
     {
@@ -21,6 +18,19 @@
         {
           "key": "Service-Worker-Allowed",
           "value": "/"
+        }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     },
@@ -52,6 +62,27 @@
       ]
     },
     {
+      "source": "/individual/dashboard",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -72,7 +103,7 @@
   "rewrites": [
     {
       "source": "/api/python/:path*",
-      "destination": "https://ecotrack-python-backend.vercel.app/:path*"
+      "destination": "https://uberplastics-api.vercel.app/:path*"
     }
   ],
   "redirects": [
@@ -86,12 +117,7 @@
       "destination": "/scan",
       "permanent": true
     }
-  ],
-  "env": {
-    "NEXT_PUBLIC_APP_URL": "@next_public_app_url",
-    "NEXT_PUBLIC_PYTHON_API_URL": "@next_public_python_api_url",
-    "NEXT_PUBLIC_REGION": "@next_public_region"
-  }
+  ]
 }
 
 

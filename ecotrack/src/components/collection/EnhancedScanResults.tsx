@@ -57,6 +57,8 @@ export function EnhancedScanResults({ result, onContinue, onShare }: EnhancedSca
     rank: 15
   })
 
+  // Client component; avoid conditional hooks by not gating on mount
+
   useEffect(() => {
     // Trigger celebration animation
     setShowCelebration(true)

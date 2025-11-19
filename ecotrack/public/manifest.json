@@ -1,6 +1,6 @@
 {
-  "name": "Uber Plastic - From Waste to Worth",
-  "short_name": "Uber Plastic",
+  "name": "UberPlastics - From Waste to Worth",
+  "short_name": "UberPlastics",
   "description": "Track plastic bottle collections, earn rewards, and make a real impact on our planet with AI-powered detection.",
   "start_url": "/",
   "display": "standalone",
@@ -66,7 +66,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Uber Plastic Dashboard"
+      "label": "UberPlastics Dashboard"
     },
     {
       "src": "/screenshots/mobile-scanner.png",

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
@@ -16,6 +17,7 @@ import { useTheme } from '@/contexts/ThemeContext'
 
 export default function CollectorHistoryPage() {
   const { darkMode } = useTheme()
+  const [formattedHistory, setFormattedHistory] = useState<Array<{ id: number; date: string; client: string; address: string; bottlesCollected: number; weight: string; duration: string; status: string; color: string; formattedDate: string }>>([])
 
   const collectionHistory = [
     {
@@ -70,6 +72,21 @@ export default function CollectorHistoryPage() {
     totalWeight: collectionHistory.reduce((sum, item) => sum + parseFloat(item.weight), 0).toFixed(1),
     totalHours: collectionHistory.reduce((sum, item) => sum + parseFloat(item.duration), 0).toFixed(1)
   }
+
+  // Format dates on client side to avoid hydration mismatch
+  useEffect(() => {
+    setFormattedHistory(collectionHistory.map(collection => ({
+      ...collection,
+      formattedDate: new Date(collection.date).toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      })
+    })))
+  }, [])
+
+  const displayHistory = formattedHistory.length > 0 ? formattedHistory : collectionHistory.map(c => ({ ...c, formattedDate: '' }))
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -170,7 +187,7 @@ export default function CollectorHistoryPage() {
 
         {/* Collection History List */}
         <div className="space-y-6">
-          {collectionHistory.map((collection, index) => (
+          {displayHistory.map((collection, index) => (
             <motion.div
               key={collection.id}
               initial={{ opacity: 0, y: 20 }}
@@ -199,12 +216,7 @@ export default function CollectorHistoryPage() {
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-4 w-4 text-gray-500" />
                     <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {new Date(collection.date).toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })}
+                      {collection.formattedDate || 'Loading...'}
                     </span>
                   </div>
                 </div>

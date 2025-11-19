@@ -14,7 +14,9 @@ export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
 
-  const currentLanguage = languages.find(lang => lang.code === language)
+  // Ensure we always have a valid language (default to 'en')
+  const safeLanguage = language || 'en'
+  const currentLanguage = languages.find(lang => lang.code === safeLanguage) || languages[0]
 
   return (
     <div className="relative">
@@ -22,11 +24,11 @@ export function LanguageSwitcher() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-sm font-medium text-gray-700 dark:text-gray-300"
-        title={`Current language: ${currentLanguage?.name}`}
+        title={`Current language: ${currentLanguage.name}`}
       >
         <Globe className="h-4 w-4" />
         <span className="text-xs font-bold uppercase tracking-wide">
-          {currentLanguage?.code}
+          {currentLanguage.code}
         </span>
       </button>
 
@@ -50,14 +52,14 @@ export function LanguageSwitcher() {
                     setIsOpen(false)
                   }}
                   className={`w-full flex items-center space-x-3 px-3 py-2 text-sm transition-colors duration-200 ${
-                    language === lang.code
+                    safeLanguage === lang.code
                       ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
                 >
                   <span className="text-base">{lang.flag}</span>
                   <span className="font-medium">{lang.name}</span>
-                  {language === lang.code && (
+                  {safeLanguage === lang.code && (
                     <span className="ml-auto text-green-600 dark:text-green-400">✓</span>
                   )}
                 </button>
@@ -75,7 +77,9 @@ export function LanguageSwitcherCompact() {
   const { language, setLanguage } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
 
-  const currentLanguage = languages.find(lang => lang.code === language)
+  // Ensure we always have a valid language (default to 'en')
+  const safeLanguage = language || 'en'
+  const currentLanguage = languages.find(lang => lang.code === safeLanguage) || languages[0]
 
   return (
     <div className="relative">
@@ -110,7 +114,7 @@ export function LanguageSwitcherCompact() {
                     setIsOpen(false)
                   }}
                   className={`w-full flex items-center space-x-2 px-2 py-1.5 text-xs transition-colors duration-200 ${
-                    language === lang.code
+                    safeLanguage === lang.code
                       ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}

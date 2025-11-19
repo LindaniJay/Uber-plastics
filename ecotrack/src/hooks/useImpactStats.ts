@@ -17,6 +17,34 @@ const REGIONAL_FACTORS = {
     seasonalVariation: 0.3,
     islandIsolationFactor: 1.4
   },
+  'zanzibar': {
+    co2PerBottle: 0.13, // kg CO₂ per bottle
+    plasticImportFactor: 0.75,
+    tourismMultiplier: 1.5,
+    seasonalVariation: 0.5,
+    islandIsolationFactor: 1.3
+  },
+  'seychelles': {
+    co2PerBottle: 0.14, // kg CO₂ per bottle
+    plasticImportFactor: 0.8,
+    tourismMultiplier: 1.8,
+    seasonalVariation: 0.6,
+    islandIsolationFactor: 1.5
+  },
+  'comoros': {
+    co2PerBottle: 0.13, // kg CO₂ per bottle
+    plasticImportFactor: 0.7,
+    tourismMultiplier: 1.2,
+    seasonalVariation: 0.35,
+    islandIsolationFactor: 1.4
+  },
+  'madagascar': {
+    co2PerBottle: 0.11, // kg CO₂ per bottle
+    plasticImportFactor: 0.6,
+    tourismMultiplier: 1.1,
+    seasonalVariation: 0.3,
+    islandIsolationFactor: 1.1
+  },
   'default': {
     co2PerBottle: 0.1, // kg CO₂ per bottle
     plasticImportFactor: 0.5,
@@ -70,7 +98,7 @@ export function useImpactStats(region: string = 'cabo-verde') {
       // Monthly impact
       monthlyBottles: monthlyStats.bottles,
       monthlyCo2Saved: monthlyStats.co2Saved,
-      monthlyPoints: monthlyStats.points,
+      monthlyPoints: monthlyStats.points || 0,
       monthlyEarnings: monthlyStats.earnings,
       
       // Environmental impact calculations

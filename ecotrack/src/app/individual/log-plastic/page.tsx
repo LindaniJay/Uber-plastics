@@ -1,365 +1,408 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  Camera, 
-  Upload, 
-  CheckCircle, 
-  AlertCircle,
-  Sparkles,
-  Leaf,
-  Award,
-  Zap,
+  Plus, 
+  X, 
+  CheckCircle,
   Recycle,
-  Target
+  Leaf,
+  DollarSign,
+  Award,
+  ArrowLeft,
+  Sparkles
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useTheme } from '@/contexts/ThemeContext'
-import { toast } from 'react-hot-toast'
-import confetti from 'canvas-confetti'
-import { CollectionConfirmation } from '@/components/collection/CollectionConfirmation'
-import { CameraScanner } from '@/components/ai/CameraScanner'
-import { EnhancedScanResults } from '@/components/collection/EnhancedScanResults'
+import { useEcoTrackStore } from '@/store/useEcoTrackStore'
+import { RewardPopup } from '@/components/ai/RewardPopup'
+import Link from 'next/link'
 
 export default function LogPlasticPage() {
+  const router = useRouter()
   const { darkMode } = useTheme()
-  const [isDetecting, setIsDetecting] = useState(false)
-  const [detectionResult, setDetectionResult] = useState<any>(null)
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [showConfirmation, setShowConfirmation] = useState(false)
-  const [showCameraScanner, setShowCameraScanner] = useState(false)
-  const [showEnhancedResults, setShowEnhancedResults] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const { addDetection } = useEcoTrackStore()
 
-  const simulateAIDetection = async (imageFile: File) => {
-    setIsDetecting(true)
-    
-    // Simulate AI processing time
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Fixed detection results - Always returns 1 bottle, 330ml, PET plastic
-    const result = {
-      bottles: 1,
-      confidence: 98,
-      polyMoney: 37,
-      co2Saved: 1,
-      quality: 'excellent',
-      category: 'PET Bottles',
-      timestamp: new Date().toISOString()
+  // Form states
+  const [bottles, setBottles] = useState(1)
+  const [size, setSize] = useState('330 ml')
+  const [color, setColor] = useState('clear')
+  const [type, setType] = useState('PET')
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [showRewardPopup, setShowRewardPopup] = useState(false)
+  const [processingStep, setProcessingStep] = useState('')
+
+  // Bottle options
+  const sizeOptions = ['250 ml', '330 ml', '500 ml', '750 ml', '1000 ml', '1500 ml']
+  const colorOptions = ['clear', 'green', 'blue', 'brown', 'other']
+  const typeOptions = ['PET', 'HDPE', 'PP', 'other']
+
+  // Calculate rewards based on input
+  const calculateRewards = useCallback(() => {
+    const basePoints = bottles * 5
+    const baseEarnings = bottles * 0.05
+    const baseCo2Saved = bottles * 0.1
+    const basePolyMoney = bottles * 5
+
+    return {
+      bottles,
+      points: basePoints,
+      earnings: baseEarnings,
+      co2Saved: baseCo2Saved,
+      polyMoney: basePolyMoney,
+      confidence: 100 // Manual entry is 100% confidence
     }
-    setDetectionResult(result)
-    setIsDetecting(false)
-    
-    // Show enhanced results
-    if (result.bottles > 0) {
-      setShowEnhancedResults(true)
+  }, [bottles])
+
+  const rewards = calculateRewards()
+
+  // Processing animation similar to scanner
+  const processLog = useCallback(async () => {
+    setIsProcessing(true)
+    setProcessingStep('Validating input...')
+
+    const steps = [
+      { delay: 300, step: 'Calculating rewards...' },
+      { delay: 600, step: 'Processing eco impact...' },
+      { delay: 900, step: 'Updating statistics...' },
+      { delay: 1200, step: 'Finalizing entry...' }
+    ]
+
+    for (const { delay, step } of steps) {
+      await new Promise(resolve => setTimeout(resolve, delay))
+      setProcessingStep(step)
     }
-  }
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setSelectedImage(e.target?.result as string)
-        simulateAIDetection(file)
-      }
-      reader.readAsDataURL(file)
+    await new Promise(resolve => setTimeout(resolve, 300))
+    setIsProcessing(false)
+    setShowRewardPopup(true)
+  }, [])
+
+  const handleAddToDashboard = useCallback(() => {
+    const detection = {
+      id: `detection_${Date.now()}`,
+      timestamp: Date.now(),
+      bottles: rewards.bottles,
+      size,
+      color,
+      type,
+      points: rewards.points,
+      earnings: rewards.earnings,
+      co2Saved: rewards.co2Saved,
+      confidence: 100,
+      polyMoney: rewards.polyMoney
     }
-  }
 
-  const handleCameraCapture = () => {
-    setShowCameraScanner(true)
-  }
+    addDetection(detection)
+    setShowRewardPopup(false)
+    router.push('/individual/dashboard')
+  }, [rewards, size, color, type, addDetection, router])
 
-  const handleCameraScanComplete = (result: any) => {
-    // Enhance the result with additional data
-    const enhancedResult = {
-      ...result,
-      quality: ['excellent', 'good', 'fair'][Math.floor(Math.random() * 3)],
-      category: 'PET Bottles',
-      timestamp: new Date().toISOString()
-    }
-    setDetectionResult(enhancedResult)
-    setShowEnhancedResults(true)
-  }
-
-  const handleConfirmCollection = () => {
-    setShowConfirmation(true)
-  }
-
-  const handleCollectionConfirmed = () => {
-    // Reset the form
-    setDetectionResult(null)
-    setSelectedImage(null)
-    setShowEnhancedResults(false)
-    setShowConfirmation(false)
-    toast.success('Collection confirmed and added to your dashboard!')
-  }
-
-  const handleShareAchievement = () => {
-    toast.success('Achievement shared to social media!')
-  }
-
-  const handleContinueFromResults = () => {
-    setShowEnhancedResults(false)
-    setShowConfirmation(true)
-  }
+  const handleScanAgain = useCallback(() => {
+    setShowRewardPopup(false)
+    setBottles(1)
+    setSize('330 ml')
+    setColor('clear')
+    setType('PET')
+    setProcessingStep('')
+  }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-teal-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="container py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="text-center mb-8">
-            <h1 className={`text-3xl lg:text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
-              Log Your Plastic Collection
-            </h1>
-            <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Use AI-powered detection to automatically count and categorize your plastic bottles
-            </p>
-          </div>
+    <div className={`min-h-screen ${darkMode ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'}`}>
+      {/* Header */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex items-center justify-between mb-6">
+          <Link
+            href="/individual/dashboard"
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              darkMode 
+                ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20' 
+                : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 shadow-sm'
+            }`}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </Link>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Upload Section */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="card"
-            >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Upload or Capture
-              </h2>
-              
-              <div className="space-y-4">
-                <button
-                  onClick={handleCameraCapture}
-                  className="w-full btn-primary group"
-                  disabled={isDetecting}
+        {/* Main Content */}
+        <div className="max-w-2xl mx-auto">
+          {/* Title Section */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-8"
+          >
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className={`p-3 rounded-2xl ${darkMode ? 'bg-green-500/20' : 'bg-green-100'}`}>
+                <Plus className={`h-8 w-8 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
+              </div>
+              <div className={`p-3 rounded-2xl ${darkMode ? 'bg-green-500/20' : 'bg-green-100'}`}>
+                <Sparkles className={`h-8 w-8 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
+              </div>
+            </div>
+            <h1 className={`text-3xl md:text-4xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Log Plastic Collection
+            </h1>
+            <p className={`text-base md:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Manually record your plastic bottle collection
+            </p>
+          </motion.div>
+
+          {/* Processing Overlay */}
+          <AnimatePresence>
+            {isProcessing && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={`fixed inset-0 z-50 flex items-center justify-center ${
+                  darkMode ? 'bg-black/90' : 'bg-white/95'
+                } backdrop-blur-md`}
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  className={`rounded-3xl p-8 text-center ${
+                    darkMode ? 'bg-gray-800/90 border border-gray-700' : 'bg-white border border-gray-200'
+                  } shadow-2xl max-w-md mx-4`}
                 >
-                  <Camera className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-                  Take Photo
-                </button>
-                
-                <div className="relative">
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleImageUpload}
-                    accept="image/*"
-                    className="hidden"
-                    disabled={isDetecting}
-                  />
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full btn-secondary group"
-                    disabled={isDetecting}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    className="mb-6 inline-block"
                   >
-                    <Upload className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-                    Upload Image
+                    <Recycle className={`h-16 w-16 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
+                  </motion.div>
+                  <h3 className={`text-xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    Processing...
+                  </h3>
+                  <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {processingStep || 'Validating input...'}
+                  </p>
+                  <div className="mt-6 h-2 bg-gray-700 dark:bg-gray-600 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-green-500 to-teal-600"
+                      initial={{ width: 0 }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 1.5 }}
+                    />
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Form Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className={`rounded-3xl p-6 lg:p-8 ${
+              darkMode 
+                ? 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-gray-700/50 shadow-2xl' 
+                : 'bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-xl'
+            }`}
+          >
+            <div className="space-y-6">
+              {/* Bottle Count */}
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Number of Bottles
+                </label>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setBottles(Math.max(1, bottles - 1))}
+                    className={`p-2 rounded-xl transition-all duration-300 ${
+                      darkMode 
+                        ? 'bg-gray-700 hover:bg-gray-600 text-white' 
+                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                  <div className={`flex-1 text-center text-4xl font-bold py-4 px-6 rounded-2xl ${
+                    darkMode ? 'bg-gray-700/50 text-green-400' : 'bg-gray-50 text-green-600'
+                  }`}>
+                    {bottles}
+                  </div>
+                  <button
+                    onClick={() => setBottles(bottles + 1)}
+                    className={`p-2 rounded-xl transition-all duration-300 ${
+                      darkMode 
+                        ? 'bg-gray-700 hover:bg-gray-600 text-white' 
+                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    <Plus className="h-5 w-5" />
                   </button>
                 </div>
               </div>
 
-              {selectedImage && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="mt-6"
-                >
-                  <img
-                    src={selectedImage}
-                    alt="Selected"
-                    className="w-full h-48 object-cover rounded-xl shadow-lg"
-                  />
-                </motion.div>
-              )}
-            </motion.div>
-
-            {/* Detection Results */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="card"
-            >
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                AI Detection Results
-              </h2>
-
-              <AnimatePresence>
-                {isDetecting ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="text-center py-12"
-                  >
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center"
+              {/* Size Selection */}
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Bottle Size
+                </label>
+                <div className="grid grid-cols-3 gap-3">
+                  {sizeOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setSize(option)}
+                      className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 ${
+                        size === option
+                          ? darkMode
+                            ? 'bg-green-500/20 text-green-400 border-2 border-green-500/50'
+                            : 'bg-green-100 text-green-700 border-2 border-green-500'
+                          : darkMode
+                            ? 'bg-gray-700/50 hover:bg-gray-700 text-gray-300 border border-gray-600'
+                            : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200'
+                      }`}
                     >
-                      <Sparkles className="h-8 w-8 text-white" />
-                    </motion.div>
-                    <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-                      Analyzing Image...
-                    </h3>
-                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      Our AI is detecting plastic bottles in your image
-                    </p>
-                  </motion.div>
-                ) : detectionResult ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6"
-                  >
-                    <div className="text-center">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                        className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center"
-                      >
-                        <CheckCircle className="h-8 w-8 text-white" />
-                      </motion.div>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-                        Detection Complete!
-                      </h3>
-                      <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Confidence: {detectionResult.confidence}%
-                      </p>
-                    </div>
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-4 text-center">
-                        <Recycle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                        <div className="text-2xl font-bold text-green-600">{detectionResult.bottles}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">Bottles</div>
-                      </div>
-                      
-                      <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl p-4 text-center">
-                        <Award className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
-                        <div className="text-2xl font-bold text-yellow-600">+{detectionResult.polyMoney}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">Poly Money</div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-xl p-4 text-center">
-                      <Leaf className="h-8 w-8 text-teal-600 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-teal-600">{detectionResult.co2Saved} kg</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">CO₂ Saved</div>
-                    </div>
-
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={handleConfirmCollection}
-                      className="w-full btn-primary"
+              {/* Color Selection */}
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Color
+                </label>
+                <div className="grid grid-cols-5 gap-3">
+                  {colorOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setColor(option)}
+                      className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 capitalize ${
+                        color === option
+                          ? darkMode
+                            ? 'bg-green-500/20 text-green-400 border-2 border-green-500/50'
+                            : 'bg-green-100 text-green-700 border-2 border-green-500'
+                          : darkMode
+                            ? 'bg-gray-700/50 hover:bg-gray-700 text-gray-300 border border-gray-600'
+                            : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200'
+                      }`}
                     >
-                      <Zap className="h-5 w-5 mr-2" />
-                      Confirm Collection
-                    </motion.button>
-                  </motion.div>
-                ) : (
-                  <div className="text-center py-12">
-                    <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-                      Ready to Detect
-                    </h3>
-                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      Upload an image or take a photo to get started
-                    </p>
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Type Selection */}
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Plastic Type
+                </label>
+                <div className="grid grid-cols-4 gap-3">
+                  {typeOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setType(option)}
+                      className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 ${
+                        type === option
+                          ? darkMode
+                            ? 'bg-green-500/20 text-green-400 border-2 border-green-500/50'
+                            : 'bg-green-100 text-green-700 border-2 border-green-500'
+                          : darkMode
+                            ? 'bg-gray-700/50 hover:bg-gray-700 text-gray-300 border border-gray-600'
+                            : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Rewards Preview */}
+              <div className={`rounded-2xl p-6 ${
+                darkMode ? 'bg-green-500/10 border border-green-500/30' : 'bg-green-50 border border-green-200'
+              }`}>
+                <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Rewards Preview
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <Award className={`h-6 w-6 mx-auto mb-2 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`} />
+                    <div className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      {rewards.points}
+                    </div>
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Points
+                    </div>
                   </div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </div>
+                  <div className="text-center">
+                    <DollarSign className={`h-6 w-6 mx-auto mb-2 ${darkMode ? 'text-green-400' : 'text-green-600'}`} />
+                    <div className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      STN {rewards.earnings.toFixed(2)}
+                    </div>
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Earnings
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <Leaf className={`h-6 w-6 mx-auto mb-2 ${darkMode ? 'text-teal-400' : 'text-teal-600'}`} />
+                    <div className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      {rewards.co2Saved.toFixed(1)}kg
+                    </div>
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      CO₂ Saved
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <Recycle className={`h-6 w-6 mx-auto mb-2 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+                    <div className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      {rewards.polyMoney}
+                    </div>
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Poly Money
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-          {/* Tips Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-8 card"
-          >
-            <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Tips for Better Detection
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Camera className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="font-semibold mb-2">Good Lighting</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Ensure bottles are well-lit and clearly visible
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Target className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="font-semibold mb-2">Clear View</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Keep bottles separate and avoid overlapping
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Sparkles className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="font-semibold mb-2">Multiple Bottles</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Group bottles together for batch processing
-                </p>
-              </div>
+              {/* Submit Button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={processLog}
+                disabled={isProcessing}
+                className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-4 px-8 rounded-2xl font-bold text-lg shadow-2xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <CheckCircle className="h-6 w-6" />
+                <span>Log Collection</span>
+              </motion.button>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Camera Scanner Modal */}
-      <CameraScanner
-        isOpen={showCameraScanner}
-        onClose={() => setShowCameraScanner(false)}
-        onScanComplete={handleCameraScanComplete}
+      {/* Reward Popup */}
+      <RewardPopup
+        isOpen={showRewardPopup}
+        onClose={() => {
+          setShowRewardPopup(false)
+          router.push('/individual/dashboard')
+        }}
+        onScanAgain={handleScanAgain}
+        onAddToDashboard={handleAddToDashboard}
+        bottles={rewards.bottles}
+        points={rewards.points}
+        earnings={rewards.earnings}
+        co2Saved={rewards.co2Saved}
+        confidence={100}
+        bottleDetails={{
+          count: rewards.bottles,
+          size,
+          material: type,
+          description: `${size} ${color} ${type} bottle`
+        }}
       />
-
-      {/* Enhanced Scan Results */}
-      {showEnhancedResults && detectionResult && (
-        <EnhancedScanResults
-          result={detectionResult}
-          onContinue={handleContinueFromResults}
-          onShare={handleShareAchievement}
-        />
-      )}
-
-      {/* Collection Confirmation Modal */}
-      {detectionResult && (
-        <CollectionConfirmation
-          isOpen={showConfirmation}
-          onClose={() => setShowConfirmation(false)}
-          onConfirm={handleCollectionConfirmed}
-          detectionResult={detectionResult}
-          userStats={{
-            totalBottles: 15, // Mock user stats
-            totalPolyMoney: 75,
-            totalEarnings: 3.75,
-            totalCo2Saved: 1.5,
-            rank: "Eco Warrior",
-            level: 3
-          }}
-        />
-      )}
     </div>
   )
 }
-
-

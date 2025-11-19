@@ -35,6 +35,8 @@ export function CameraScanner({ isOpen, onClose, onScanComplete }: CameraScanner
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
 
+  // Note: component is client-side; avoid conditional hook order by not gating on mount
+
   useEffect(() => {
     if (isOpen) {
       startCamera()

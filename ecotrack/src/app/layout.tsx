@@ -1,31 +1,32 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Suspense } from 'react'
+// import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { AuthNavbar } from '@/components/layout/AuthNavbar'
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { ViewportMeta } from '@/components/ui/ViewportMeta'
-import dynamic from 'next/dynamic'
 import { shouldShowPerformanceMetrics } from '@/utils/productionConfig'
+// import ChatbotMount from '@/components/chatbot/ChatbotMount'
 
-// Lazy load the chatbot - remove ssr: false for Server Components
-const EcoChatbot = dynamic(() => import('@/components/chatbot/EcoChatbot').then(mod => ({ default: mod.EcoChatbot })), {
-  loading: () => null
-})
-
-// Performance monitor (development only) - hidden from UI but keeps functionality
-const PerformanceMonitor = dynamic(() => import('@/components/ui/PerformanceMonitor').then(mod => ({ default: mod.PerformanceMonitor })), {
-  loading: () => null
-})
+// Chatbot disabled - commented out to avoid webpack module resolution errors
 
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ 
+//   subsets: ['latin'],
+//   display: 'swap',
+//   fallback: ['system-ui', 'arial']
+// })
+
+// Use system font instead
+const inter = { className: 'font-sans' }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
-  title: 'Uber Plastic - From Waste to Worth',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+  title: 'UberPlastics - From Waste to Worth',
   description: 'Track plastic bottle collections, earn rewards, and make a real impact on our planet. Join the movement towards a cleaner, more sustainable future.',
   keywords: ['recycling', 'sustainability', 'environment', 'plastic bottles', 'eco-friendly', 'rewards'],
-  authors: [{ name: 'Uber Plastic Team' }],
+  authors: [{ name: 'UberPlastics Team' }],
   robots: 'index, follow',
   manifest: '/manifest.json',
   icons: {
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
       : "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
   },
   openGraph: {
-    title: 'Uber Plastic - From Waste to Worth',
+    title: 'UberPlastics - From Waste to Worth',
     description: 'Track plastic bottle collections, earn rewards, and make a real impact on our planet.',
     type: 'website',
     locale: 'en_US',
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Uber Plastic - From Waste to Worth',
+    title: 'UberPlastics - From Waste to Worth',
     description: 'Track plastic bottle collections, earn rewards, and make a real impact on our planet.',
   },
 }
@@ -74,16 +75,23 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
-        <script src="/force-text-visibility.js" defer></script>
         <ViewportMeta />
       </head>
       <body className={`${inter.className} text-gray-900 dark:text-white screen-fit ios-fix`}>
         <Providers>
-          <AuthNavbar />
-          <main className="content-fit">
+          <div className="hidden md:block">
+            <AuthNavbar />
+          </div>
+          <main className="content-fit pt-4 md:pt-0 pb-20 md:pb-0">
             {children}
           </main>
-          <EcoChatbot />
+          <Suspense fallback={null}>
+            <MobileBottomNav />
+          </Suspense>
+          {/* Chatbot disabled */}
+          {/* <Suspense fallback={null}>
+            <ChatbotMount />
+          </Suspense> */}
           {/* Temporarily disabled PerformanceMonitor to fix loading issue */}
           {/* {shouldShowPerformanceMetrics && <PerformanceMonitor />} */}
         </Providers>

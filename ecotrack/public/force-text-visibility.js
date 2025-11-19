@@ -1,5 +1,6 @@
 // Force Text Visibility - JavaScript Solution
 // This script runs after page load to ensure all text is visible
+// Modified to prevent hydration mismatches by not adding font-weight styles
 
 function forceTextVisibility() {
   // Find all elements that might have invisible text
@@ -22,7 +23,7 @@ function forceTextVisibility() {
           element.closest('.bg-white') ||
           element.closest('[class*="bg-white"]')) {
         element.style.color = '#000000 !important';
-        element.style.fontWeight = '500';
+        // Removed fontWeight to prevent hydration mismatch
       }
       // Force white text on dark backgrounds
       else if (backgroundColor.includes('rgb(31, 41, 55)') ||
@@ -32,7 +33,7 @@ function forceTextVisibility() {
                element.closest('[class*="bg-gray-8"]') ||
                element.closest('[class*="bg-gray-9"]')) {
         element.style.color = '#FFFFFF !important';
-        element.style.fontWeight = '500';
+        // Removed fontWeight to prevent hydration mismatch
       }
     }
   });
@@ -51,10 +52,10 @@ function forceTextVisibility() {
       children.forEach(child => {
         if (child.tagName.match(/H[1-6]/)) {
           child.style.color = '#FFFFFF !important';
-          child.style.fontWeight = '700';
+          // Removed fontWeight to prevent hydration mismatch
         } else {
           child.style.color = '#F3F4F6 !important';
-          child.style.fontWeight = '500';
+          // Removed fontWeight to prevent hydration mismatch
         }
       });
     } else {
@@ -66,10 +67,10 @@ function forceTextVisibility() {
       children.forEach(child => {
         if (child.tagName.match(/H[1-6]/)) {
           child.style.color = '#000000 !important';
-          child.style.fontWeight = '700';
+          // Removed fontWeight to prevent hydration mismatch
         } else {
           child.style.color = '#1F2937 !important';
-          child.style.fontWeight = '500';
+          // Removed fontWeight to prevent hydration mismatch
         }
       });
     }

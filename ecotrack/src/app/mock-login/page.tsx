@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMockAuth } from '@/contexts/MockAuthContext'
+import { useMockAuth, MockAuthProvider } from '@/contexts/MockAuthContext'
 import { useTheme } from '@/contexts/ThemeContext'
 import { 
   Eye, 
@@ -16,16 +16,18 @@ import {
   AlertCircle
 } from 'lucide-react'
 
-export default function MockLoginPage() {
+function MockLoginContent() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   
-  const { login, currentUser } = useMockAuth()
   const { darkMode } = useTheme()
   const router = useRouter()
+
+  // Initialize mock auth
+  const { login, currentUser } = useMockAuth()
 
   // Redirect if already logged in
   useEffect(() => {
@@ -50,12 +52,14 @@ export default function MockLoginPage() {
       
       if (success) {
         // Get the user data to redirect to their dashboard
-        const user = await new Promise((resolve) => {
+        const user = await new Promise<any>((resolve) => {
           // Wait for the auth context to update
           setTimeout(() => {
             const storedUser = localStorage.getItem('ecotrack-mock-user')
             if (storedUser) {
               resolve(JSON.parse(storedUser))
+            } else {
+              resolve(null)
             }
           }, 100)
         })
@@ -93,7 +97,7 @@ export default function MockLoginPage() {
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            Uber Plastic Login
+            UberPlastics Login
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             Enter your credentials to access your dashboard
@@ -241,3 +245,13 @@ export default function MockLoginPage() {
     </div>
   )
 }
+
+export default function MockLoginPage() {
+  return (
+    <MockAuthProvider>
+      <MockLoginContent />
+    </MockAuthProvider>
+  )
+}
+
+export const dynamic = 'force-dynamic'

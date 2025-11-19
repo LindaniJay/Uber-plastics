@@ -1,5 +1,6 @@
 {
-  "name": "uber-plastic",
+  "type": "module",
+  "name": "uber-plastics",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -8,7 +9,7 @@
     "dev:no-csp": "node dev-no-csp.js",
     "dev:fix": "node scripts/fix-permissions.js && next dev",
     "fix-permissions": "node scripts/fix-permissions.js",
-    "build": "next build",
+    "build": "set ESLINT_NO_DEV_ERRORS=true && next build",
     "build:analyze": "ANALYZE=true next build",
     "build:optimize": "node scripts/optimize-build.js",
     "start": "next start",
@@ -17,7 +18,8 @@
     "perf": "npm run build:optimize",
     "perf:optimize": "node scripts/performance-optimization.js",
     "perf:test": "npm run build && npm run perf:optimize",
-    "perf:validate": "node scripts/validate-performance.js"
+    "perf:validate": "node scripts/validate-performance.js",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@tensorflow-models/coco-ssd": "^2.2.3",
@@ -37,15 +39,21 @@
     "zustand": "4.4.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@playwright/test": "^1.56.1",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "20.0.0",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "autoprefixer": "10.4.21",
     "browserslist": "^4.26.3",
-    "eslint": "8.0.0",
+    "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "globals": "^15.0.0",
     "postcss": "8.5.6",
     "tailwindcss": "3.4.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.0.0"
   }
 }

@@ -42,6 +42,15 @@ export function useOptimizedFetch<T>({
   const retryCountRef = useRef(0)
   const abortControllerRef = useRef<AbortController | null>(null)
 
+  // Stable refs for callbacks to prevent infinite loops
+  const onSuccessRef = useRef(onSuccess)
+  const onErrorRef = useRef(onError)
+  
+  useEffect(() => {
+    onSuccessRef.current = onSuccess
+    onErrorRef.current = onError
+  }, [onSuccess, onError])
+
   const fetchData = useCallback(async (isRetry = false) => {
     if (!enabled || !url) return
 
@@ -70,7 +79,7 @@ export function useOptimizedFetch<T>({
       setLastFetch(Date.now())
       setIsStale(false)
       retryCountRef.current = 0
-      onSuccess?.(result)
+      onSuccessRef.current?.(result)
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unknown error')
       
@@ -82,11 +91,11 @@ export function useOptimizedFetch<T>({
       }
 
       setError(error)
-      onError?.(error)
+      onErrorRef.current?.(error)
     } finally {
       setIsLoading(false)
     }
-  }, [url, options, enabled, cacheTime, retryCount, retryDelay, onSuccess, onError])
+  }, [url, enabled, cacheTime, retryCount, retryDelay])
 
   const refetch = useCallback(async () => {
     await fetchData()
@@ -106,12 +115,13 @@ export function useOptimizedFetch<T>({
     }
   }, [lastFetch, staleTime])
 
-  // Initial fetch
+  // Initial fetch - only when url or enabled changes
   useEffect(() => {
     if (enabled && url) {
       fetchData()
     }
-  }, [enabled, url, fetchData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, url])
 
   // Cleanup on unmount
   useEffect(() => {

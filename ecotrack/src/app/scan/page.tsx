@@ -15,9 +15,8 @@ export default function ScanPage() {
 
   const handleScanComplete = (results: any) => {
     console.log('Scan completed:', results)
-    // Results are automatically saved to the store
-    // Redirect to dashboard to see updated stats
-    router.push('/individual/dashboard')
+    // Redirect to checkout to confirm and finalize logging
+    router.push('/individual/checkout')
   }
 
   const handleClose = () => {

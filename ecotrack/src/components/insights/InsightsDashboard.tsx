@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   BarChart, 
@@ -148,8 +148,8 @@ export function InsightsDashboard() {
   const { data: caboVerdeData, summary: caboVerdeSummary, getImportTrendData, getRecyclingComparison } = useCountryData('cabo_verde')
   const { data: saoTomeData, summary: saoTomeSummary } = useCountryData('sao_tome')
   
-  const importTrendData = getImportTrendData()
-  const recyclingComparison = getRecyclingComparison()
+  const importTrendData = useMemo(() => getImportTrendData(), [getImportTrendData])
+  const recyclingComparison = useMemo(() => getRecyclingComparison(), [getRecyclingComparison])
   
   const packagingData = [
     { name: 'Cabo Verde', packaging: 72, textiles: 18, tubes: 10 },

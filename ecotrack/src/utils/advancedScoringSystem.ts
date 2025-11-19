@@ -88,7 +88,7 @@ export class AdvancedScoringSystem {
     const { bottlesDetected, bottleTypes, userLevel, scanQuality } = scanData
     
     // Base poly money per bottle
-    let basePolyMoney = bottlesDetected * 5
+    const basePolyMoney = bottlesDetected * 5
     
     // Quality multiplier (0.5 to 1.5)
     const qualityMultiplier = 0.5 + (scanQuality * 1.0)

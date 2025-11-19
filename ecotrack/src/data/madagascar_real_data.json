@@ -1,0 +1,168 @@
+{
+  "country": "Madagascar",
+  "population": 29611714,
+  "area": 587041,
+  "gdp": 14.5,
+  "currency": "MGA",
+  "plasticWaste": {
+    "annualGeneration": 450000,
+    "perCapita": 15.2,
+    "recyclingRate": 3.5,
+    "landfillRate": 85.2,
+    "incinerationRate": 6.8,
+    "oceanLeakage": 4.3,
+    "composition": {
+      "PET": 28,
+      "HDPE": 30,
+      "PP": 22,
+      "LDPE": 12,
+      "PS": 5,
+      "Other": 3
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 12500,
+      "perCapita": 0.42,
+      "fromPlastic": 6750
+    },
+    "oceanPollution": {
+      "plasticWaste": 19350,
+      "microplastics": 45.2,
+      "marineLifeImpact": "Very High"
+    },
+    "wasteManagement": {
+      "collectionRate": 25,
+      "treatmentFacilities": 8,
+      "recyclingCenters": 12,
+      "informalSector": 75
+    }
+  },
+  "economicData": {
+    "wasteManagementCost": 12.5,
+    "recyclingValue": 3.2,
+    "tourismImpact": 8.5,
+    "employment": {
+      "formal": 850,
+      "informal": 3500
+    }
+  },
+  "challenges": [
+    "Very large population with limited infrastructure",
+    "Extensive coastline vulnerable to ocean pollution",
+    "High poverty rate affecting waste management",
+    "Limited waste collection in rural areas",
+    "Insufficient recycling facilities for population size",
+    "High dependency on informal waste sector",
+    "Challenges with waste transportation across large island"
+  ],
+  "opportunities": [
+    "Large informal sector with potential for formalization",
+    "Growing international support for environmental programs",
+    "Potential for significant impact with improved infrastructure",
+    "Community-based initiatives showing success",
+    "International funding opportunities",
+    "Growing awareness of unique biodiversity protection needs",
+    "Potential for circular economy at scale"
+  ],
+  "initiatives": [
+    {
+      "name": "National Plastic Waste Management Program",
+      "description": "Comprehensive national program for plastic waste reduction",
+      "status": "active",
+      "impact": "Very High",
+      "statusColor": "#10B981",
+      "participants": 15000,
+      "bottlesCollected": 450000,
+      "co2Saved": 1800
+    },
+    {
+      "name": "Coastal Cleanup Campaign",
+      "description": "Large-scale beach and coastal cleanup initiatives",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 8500,
+      "bottlesCollected": 280000,
+      "co2Saved": 1120
+    },
+    {
+      "name": "Urban Recycling Initiative",
+      "description": "Recycling programs in major urban centers",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 12000,
+      "bottlesCollected": 320000,
+      "co2Saved": 1280
+    },
+    {
+      "name": "Rural Waste Management Education",
+      "description": "Education and awareness programs in rural communities",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 25000,
+      "bottlesCollected": 0,
+      "co2Saved": 0
+    }
+  ],
+  "regionalData": {
+    "regions": [
+      {
+        "name": "Antananarivo",
+        "population": 3200000,
+        "plasticWaste": 48640,
+        "recyclingRate": 5.2
+      },
+      {
+        "name": "Toamasina",
+        "population": 450000,
+        "plasticWaste": 6840,
+        "recyclingRate": 4.5
+      },
+      {
+        "name": "Antsiranana",
+        "population": 320000,
+        "plasticWaste": 4864,
+        "recyclingRate": 3.8
+      }
+    ]
+  },
+  "trends": {
+    "plasticConsumption": {
+      "2020": 14.2,
+      "2021": 14.6,
+      "2022": 14.9,
+      "2023": 15.2,
+      "projected2024": 15.6
+    },
+    "recyclingRate": {
+      "2020": 2.5,
+      "2021": 2.9,
+      "2022": 3.2,
+      "2023": 3.5,
+      "projected2024": 4.0
+    },
+    "oceanLeakage": {
+      "2020": 5.2,
+      "2021": 4.8,
+      "2022": 4.5,
+      "2023": 4.3,
+      "projected2024": 4.0
+    }
+  },
+  "targets": {
+    "2030": {
+      "recyclingRate": 12,
+      "oceanLeakage": 2.0,
+      "circularEconomy": 8
+    },
+    "2050": {
+      "recyclingRate": 35,
+      "oceanLeakage": 0.8,
+      "circularEconomy": 25
+    }
+  }
+}
+

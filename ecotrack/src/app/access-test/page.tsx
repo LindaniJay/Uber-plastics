@@ -65,7 +65,8 @@ export default function AccessTestPage() {
       icon: User,
       shouldBeAccessible: user?.role === 'individual',
       requiresAuth: true,
-      allowedRoles: ['individual']
+      allowedRoles: ['individual'],
+      isPublic: false
     },
     {
       path: '/institution',
@@ -73,7 +74,8 @@ export default function AccessTestPage() {
       icon: Building,
       shouldBeAccessible: user?.role === 'institution',
       requiresAuth: true,
-      allowedRoles: ['institution']
+      allowedRoles: ['institution'],
+      isPublic: false
     },
     {
       path: '/collector',
@@ -81,7 +83,8 @@ export default function AccessTestPage() {
       icon: Truck,
       shouldBeAccessible: user?.role === 'collector',
       requiresAuth: true,
-      allowedRoles: ['collector']
+      allowedRoles: ['collector'],
+      isPublic: false
     },
     {
       path: '/depot',
@@ -89,14 +92,16 @@ export default function AccessTestPage() {
       icon: Warehouse,
       shouldBeAccessible: user?.role === 'depot',
       requiresAuth: true,
-      allowedRoles: ['depot']
+      allowedRoles: ['depot'],
+      isPublic: false
     },
     {
       path: '/profile',
       name: 'User Profile',
       icon: User,
       shouldBeAccessible: isAuthenticated,
-      requiresAuth: true
+      requiresAuth: true,
+      isPublic: false
     }
   ]
 
@@ -152,10 +157,10 @@ export default function AccessTestPage() {
   }
 
   const testCredentials = [
-    { email: 'demo@ecotrack.app', password: 'demo123', role: 'Individual' },
-    { email: 'institution@ecotrack.app', password: 'demo123', role: 'Institution' },
-    { email: 'collector@ecotrack.app', password: 'demo123', role: 'Collector' },
-    { email: 'depot@ecotrack.app', password: 'demo123', role: 'Depot' }
+    { email: 'demo@ecotrack.app', password: 'demo123', role: 'individual' },
+    { email: 'institution@ecotrack.app', password: 'demo123', role: 'institution' },
+    { email: 'collector@ecotrack.app', password: 'demo123', role: 'collector' },
+    { email: 'depot@ecotrack.app', password: 'demo123', role: 'depot' }
   ]
 
   useEffect(() => {

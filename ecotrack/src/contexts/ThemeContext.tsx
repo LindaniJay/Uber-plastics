@@ -12,6 +12,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Start with false (light mode) for consistent SSR
   const [darkMode, setDarkMode] = useState(false)
   const [mounted, setMounted] = useState(false)
 
@@ -23,12 +24,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (savedTheme) {
         setDarkMode(savedTheme === 'dark')
       } else {
-        setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
+        // Use system preference only after mount to avoid hydration mismatch
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        setDarkMode(prefersDark)
       }
     }
   }, [])
 
   useEffect(() => {
+    // Only apply theme changes after mount to avoid hydration mismatch
     if (mounted && typeof window !== 'undefined') {
       if (darkMode) {
         document.documentElement.classList.add('dark')

@@ -18,9 +18,10 @@ import Link from 'next/link'
 
 export default function ProgressPage() {
   const { darkMode } = useTheme()
-  const [selectedRegion, setSelectedRegion] = useState<'cabo-verde' | 'sao-tome'>('cabo-verde')
+  const [selectedRegion, setSelectedRegion] = useState<'cabo-verde' | 'sao-tome' | 'zanzibar' | 'seychelles' | 'comoros' | 'madagascar'>('cabo-verde')
   const [timeframe, setTimeframe] = useState<'7d' | '30d' | '90d' | '1y'>('30d')
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [formattedLastUpdated, setFormattedLastUpdated] = useState('')
 
   // Mock depot data - in real implementation, this would come from your depot API
   const [depotData, setDepotData] = useState<DepotData>({
@@ -36,6 +37,11 @@ export default function ProgressPage() {
   })
 
   const { isLoading, countryComparison, progressMetrics, recommendations } = useProgressComparison(selectedRegion, depotData)
+
+  // Format last updated date on client side to avoid hydration mismatch
+  useEffect(() => {
+    setFormattedLastUpdated(new Date(depotData.lastUpdated).toLocaleString())
+  }, [depotData.lastUpdated])
 
   // Simulate real-time data updates
   useEffect(() => {
@@ -54,16 +60,6 @@ export default function ProgressPage() {
     return () => clearInterval(interval)
   }, [])
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-xl">Loading Progress Analysis...</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}>
@@ -192,10 +188,10 @@ export default function ProgressPage() {
             {/* Region Selector */}
             <div className="space-y-3">
               <label className="text-sm font-medium text-blue-200">Region</label>
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedRegion('cabo-verde')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     selectedRegion === 'cabo-verde'
                       ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg'
                       : 'bg-white/10 text-blue-200 hover:bg-white/20'
@@ -205,13 +201,53 @@ export default function ProgressPage() {
                 </button>
                 <button
                   onClick={() => setSelectedRegion('sao-tome')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     selectedRegion === 'sao-tome'
                       ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg'
                       : 'bg-white/10 text-blue-200 hover:bg-white/20'
                   }`}
                 >
-                  São Tomé & Príncipe
+                  São Tomé
+                </button>
+                <button
+                  onClick={() => setSelectedRegion('zanzibar')}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    selectedRegion === 'zanzibar'
+                      ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg'
+                      : 'bg-white/10 text-blue-200 hover:bg-white/20'
+                  }`}
+                >
+                  Zanzibar
+                </button>
+                <button
+                  onClick={() => setSelectedRegion('seychelles')}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    selectedRegion === 'seychelles'
+                      ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg'
+                      : 'bg-white/10 text-blue-200 hover:bg-white/20'
+                  }`}
+                >
+                  Seychelles
+                </button>
+                <button
+                  onClick={() => setSelectedRegion('comoros')}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    selectedRegion === 'comoros'
+                      ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg'
+                      : 'bg-white/10 text-blue-200 hover:bg-white/20'
+                  }`}
+                >
+                  Comoros
+                </button>
+                <button
+                  onClick={() => setSelectedRegion('madagascar')}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    selectedRegion === 'madagascar'
+                      ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg'
+                      : 'bg-white/10 text-blue-200 hover:bg-white/20'
+                  }`}
+                >
+                  Madagascar
                 </button>
               </div>
             </div>
@@ -300,7 +336,7 @@ export default function ProgressPage() {
             <div>
               <h4 className="text-lg font-semibold text-white mb-2">Data Quality & Sources</h4>
               <p className="text-blue-200 text-sm">
-                Last updated: {new Date(depotData.lastUpdated).toLocaleString()} • 
+                Last updated: {formattedLastUpdated || 'Loading...'} • 
                 Data confidence: 94.2% • 
                 Sources: Depot operations, country statistics, environmental reports
               </p>

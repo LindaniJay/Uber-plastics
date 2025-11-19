@@ -6,7 +6,7 @@ interface User {
   id: string
   name: string
   email: string
-  role: 'individual' | 'hub' | 'collector' | 'depot'
+  role: 'individual' | 'hub' | 'collector' | 'depot' | 'institution'
   region: 'cabo-verde' | 'sao-tome'
   joinDate: string
   avatar?: string
@@ -34,36 +34,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Check for existing session on mount with performance optimization
   useEffect(() => {
-    const checkAuth = async () => {
+    let isCancelled = false
+
+    const checkAuth = () => {
       try {
-        // Use requestIdleCallback for non-critical auth check
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => {
-            const storedUser = localStorage.getItem('ecotrack-user')
-            if (storedUser) {
-              const userData = JSON.parse(storedUser)
+        // Quick synchronous check first for immediate render
+        const storedUser = localStorage.getItem('ecotrack-user')
+        if (storedUser) {
+          try {
+            const userData = JSON.parse(storedUser)
+            if (!isCancelled) {
               setUser(userData)
             }
-            setIsLoading(false)
-          })
-        } else {
-          // Fallback for browsers without requestIdleCallback
-          setTimeout(() => {
-            const storedUser = localStorage.getItem('ecotrack-user')
-            if (storedUser) {
-              const userData = JSON.parse(storedUser)
-              setUser(userData)
-            }
-            setIsLoading(false)
-          }, 0)
+          } catch (parseError) {
+            // Invalid JSON, clear it
+            localStorage.removeItem('ecotrack-user')
+          }
+        }
+        if (!isCancelled) {
+          setIsLoading(false)
         }
       } catch (error) {
         console.error('Error checking auth:', error)
-        setIsLoading(false)
+        if (!isCancelled) {
+          setIsLoading(false)
+        }
       }
     }
 
+    // Run immediately but ensure it doesn't block
     checkAuth()
+
+    return () => {
+      isCancelled = true
+    }
   }, [])
 
   const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
@@ -103,6 +107,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           name: 'Green Hub',
           email: 'hub@ecotrack.app',
           role: 'hub',
+          region: 'cabo-verde',
+          joinDate: new Date().toISOString()
+        }
+        
+        setUser(mockUser)
+        localStorage.setItem('ecotrack-user', JSON.stringify(mockUser))
+        return { success: true }
+      }
+      
+      if (email === 'institution@ecotrack.app' && password === 'demo123') {
+        const mockUser: User = {
+          id: 'user_202',
+          name: 'Eco Institution',
+          email: 'institution@ecotrack.app',
+          role: 'institution',
           region: 'cabo-verde',
           joinDate: new Date().toISOString()
         }
@@ -339,6 +358,14 @@ export const mockUsers: User[] = [
     name: 'Green Hub',
     email: 'hub@ecotrack.app',
     role: 'hub',
+    region: 'cabo-verde',
+    joinDate: new Date().toISOString()
+  },
+  {
+    id: 'user_202',
+    name: 'Eco Institution',
+    email: 'institution@ecotrack.app',
+    role: 'institution',
     region: 'cabo-verde',
     joinDate: new Date().toISOString()
   },

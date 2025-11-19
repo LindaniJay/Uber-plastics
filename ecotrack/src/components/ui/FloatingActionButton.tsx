@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, X, Camera, BarChart3, Award, Users } from 'lucide-react'
+import { Plus, X, BarChart3, Award, Users } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 
@@ -11,12 +11,6 @@ export function FloatingActionButton() {
   const { user } = useAuth()
 
   const actions = [
-    {
-      icon: Camera,
-      label: 'AI Scanner',
-      href: '/scan',
-      color: 'from-green-500 to-emerald-600'
-    },
     {
       icon: BarChart3,
       label: 'View Stats',

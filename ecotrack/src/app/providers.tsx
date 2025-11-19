@@ -1,11 +1,11 @@
 'use client'
 
+import React, { Suspense } from 'react'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { DataProvider } from '@/contexts/DataContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import { Toaster } from 'react-hot-toast'
-import { Suspense } from 'react'
 
 // Lazy load heavy components
 const LazyToaster = () => (
