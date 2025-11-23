@@ -1,0 +1,315 @@
+{
+  "country": "Cabo Verde",
+  "region": "West Africa",
+  "population": 600000,
+  "area": 4033,
+  "areaUnit": "km²",
+  "populationDensity": 149,
+  "populationDensityUnit": "per km²",
+  "urbanPopulation": 66,
+  "urbanPopulationUnit": "%",
+  "populationProjection2050": 700000,
+  "gdp": 2.315,
+  "gdpUnit": "billion USD",
+  "islands": [
+    "Santiago", "São Vicente", "Santo Antão", "Fogo", "Maio", 
+    "Brava", "Sal", "Boa Vista", "São Nicolau"
+  ],
+  "plasticWaste": {
+    "annualGeneration": 16790,
+    "unit": "tons/year",
+    "perCapita": 0.07,
+    "unitPerCapita": "kg/person/day",
+    "recyclingRate": 16,
+    "unitRecyclingRate": "%",
+    "oceanLeakage": 1200,
+    "unitOceanLeakage": "tons/year",
+    "plasticComposition": 13,
+    "plasticCompositionUnit": "% of MSW"
+  },
+  "tradeData": {
+    "plasticImports": {
+      "annualVolume": 12200,
+      "unit": "tons/year",
+      "trend": "slight increase from 10,300 to 12,200 tonnes/year (2017-2021)",
+      "primaryForms": {
+        "other": 72,
+        "hdpe": 8,
+        "ldpe": 7,
+        "pvc": 7,
+        "ps": 3,
+        "polyester": 2
+      },
+      "productForms": {
+        "pp": 19,
+        "polyester": 15,
+        "ldpe": 16,
+        "hdpe": 13,
+        "pvc": 13,
+        "pet": 8,
+        "ps": 6,
+        "syntheticRubber": 6
+      },
+      "wasteImports": 0.4,
+      "wasteImportsUnit": "tonnes/year average (2017-2021)"
+    },
+    "plasticExports": {
+      "annualVolume": 200,
+      "unit": "tons/year",
+      "trend": "stable except for 8,000 tonnes in 2019",
+      "wasteExports": 4.2,
+      "wasteExportsUnit": "tonnes (2019 only)"
+    },
+    "packagingImports": {
+      "value2005": 2.902,
+      "value2023": 10.666,
+      "unit": "million USD",
+      "trend": "increased from US$ 2,902,000 to 10,666,000"
+    },
+    "textilesImports": {
+      "value2005": 1.158,
+      "value2023": 2.343,
+      "unit": "million USD",
+      "trend": "increased from US$ 1,158,000 to 2,343,000"
+    }
+  },
+  "wasteManagement": {
+    "mswGeneration": {
+      "perCapita": 0.71,
+      "unit": "kg/person/day",
+      "total": 132495,
+      "totalUnit": "tonnes/year"
+    },
+    "landfillData": {
+      "accumulation2015": 145900,
+      "unit": "tonnes/year",
+      "totalAccumulation": 170640,
+      "totalUnit": "tonnes/year"
+    },
+    "collectionCoverage": {
+      "national": 79,
+      "urban": 97,
+      "unit": "% (2018)"
+    },
+    "beachLitter": {
+      "density": 1649256,
+      "unit": "items per km² (2018)"
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 450000,
+      "unit": "tons CO2/year",
+      "perCapita": 0.82,
+      "unitPerCapita": "tons CO2/year"
+    },
+    "marinePollution": {
+      "beachCleanupData": {
+        "annualEvents": 45,
+        "volunteers": 1200,
+        "wasteCollected": 8.5,
+        "unitWasteCollected": "tons"
+      },
+      "microplastics": {
+        "concentration": 0.8,
+        "unit": "particles/m³",
+        "trend": "increasing"
+      }
+    }
+  },
+  "economicData": {
+    "gdp": 1.8,
+    "unitGdp": "billion USD",
+    "tourismContribution": 25,
+    "unitTourismContribution": "% of GDP",
+    "wasteManagementCost": 2.5,
+    "unitWasteManagementCost": "million USD/year"
+  },
+  "policyFramework": {
+    "nationalCoordination": {
+      "ministry": "Ministry of Agriculture and Environment (MAA)",
+      "directorate": "National Directorate for Environment (DNA)",
+      "services": [
+        "Environmental Impact Prevention and Assessment Services",
+        "Environmental Quality Information and Monitoring Service",
+        "Nature Conservation Service",
+        "Environmental Sanitation Service"
+      ],
+      "council": "National Council for the Environment and Climate Change (CNAAC)",
+      "waterAgency": "National Water and Sanitation Agency (ANAS)",
+      "environmentalFund": "Environmental Fund (public institute)"
+    },
+    "plasticLegislation": {
+      "singleUsePlasticLaw": {
+        "name": "Legal Regime for Single-Use Plastic (Law No. 22/X/2023)",
+        "description": "Establishes legal framework for commercialisation, import, distribution and production of single-use plastic",
+        "prohibitions": [
+          "Non-recyclable plastics",
+          "Oxo-biodegradable plastics",
+          "Oxo-degradable plastics"
+        ],
+        "exceptions": "Health, cosmetics and personal hygiene areas",
+        "bottleRegulation": "Bans plastic bottles smaller than 500ml",
+        "reusableBottles": "19-litre bottles refillable up to 50 times",
+        "wastePrevention": "Prevent up to 170 tonnes of plastic waste annually"
+      },
+      "ecoTax": {
+        "name": "Eco-tax Legal Regime (Law No. 17/VIII/2012)",
+        "description": "Makes plastic-based products subject to eco-tax",
+        "products": [
+          "Plastic transport or packaging articles",
+          "Stoppers, lids, capsules for plastic containers (PET and derivatives)",
+          "Plastic egg pallets",
+          "Disposable cups and plastic foil rolls"
+        ],
+        "rates": "2 to 100 Cape Verdean escudos per item"
+      }
+    },
+    "wasteManagementLegislation": {
+      "urbanWasteLaw": {
+        "name": "Legal Regime for Urban Waste Management (Decree-Law No. 26/2020)",
+        "description": "Approves legal framework for municipal and inter-municipal urban waste management systems",
+        "coverage": "Collection, transport, storage, sorting, treatment, recovery and disposal of urban waste",
+        "partnerships": "Public and private initiatives for waste collection and management",
+        "authority": "ANAS assigned as national waste authority"
+      }
+    },
+    "internationalConventions": {
+      "ratified": [
+        "Basel Convention on Transboundary Waste (1999)",
+        "Rotterdam Convention on Hazardous Chemicals (2006)",
+        "Stockholm Convention on POPs (2006)",
+        "UNCLOS (1987)",
+        "MARPOL Annex V (2016)",
+        "CBD (1995)",
+        "Paris Agreement (2017)"
+      ],
+      "notRatified": [
+        "Bamako Convention",
+        "BBNJ Agreement (signed 2023, not ratified)"
+      ]
+    }
+  },
+  "initiatives": [
+    {
+      "name": "Plastic-Free Islands",
+      "description": "Eliminate single-use plastics from all islands by 2030",
+      "status": "active",
+      "startDate": "2020-01-01",
+      "targetDate": "2030-12-31"
+    },
+    {
+      "name": "Ocean Cleanup Program",
+      "description": "Monthly beach cleanups across all inhabited islands",
+      "status": "active",
+      "startDate": "2019-06-01",
+      "participants": 500
+    },
+    {
+      "name": "Eco-Tourism Certification",
+      "description": "Certify hotels and restaurants for sustainable practices",
+      "status": "pilot",
+      "startDate": "2021-03-01",
+      "certifiedBusinesses": 15
+    }
+  ],
+  "challenges": [
+    "Limited waste management infrastructure",
+    "High dependence on imports (70% of plastic is imported packaging)",
+    "Tourism season creates seasonal waste spikes",
+    "Limited recycling facilities",
+    "High transportation costs between islands"
+  ],
+  "opportunities": [
+    "Strong community engagement in environmental initiatives",
+    "Growing eco-tourism sector",
+    "Government commitment to sustainability",
+    "International partnerships for waste management",
+    "Innovative local solutions for waste reduction"
+  ],
+  "regionalFactors": {
+    "plasticImportFactor": 0.7,
+    "tourismMultiplier": 1.3,
+    "seasonalVariation": 0.4,
+    "islandIsolationFactor": 1.2
+  },
+  "detailedTradeData": {
+    "importTrends": {
+      "period": "2017-2021",
+      "totalIncrease": "18.4%",
+      "primaryForms": {
+        "other": 72,
+        "hdpe": 8,
+        "ldpe": 7,
+        "pvc": 7,
+        "ps": 3,
+        "polyester": 2
+      },
+      "productForms": {
+        "pp": 19,
+        "polyester": 15,
+        "ldpe": 16,
+        "hdpe": 13,
+        "pvc": 13,
+        "pet": 8,
+        "ps": 6,
+        "syntheticRubber": 6
+      },
+      "wasteImports": 0.4,
+      "wasteImportsUnit": "tonnes/year average"
+    },
+    "exportTrends": {
+      "annualVolume": 200,
+      "unit": "tonnes/year",
+      "anomaly": "8,000 tonnes in 2019",
+      "wasteExports": 4.2,
+      "wasteExportsUnit": "tonnes (2019 only)"
+    },
+    "problematicPlastics": {
+      "hsCodes": [
+        "392329: Plastics sacks and bags",
+        "392390: Plastics articles for conveyance",
+        "390410: PVC in primary forms",
+        "392049: PVC plates and sheets"
+      ],
+      "impact": "High import volumes of avoidable plastics"
+    }
+  },
+  "policyCompliance": {
+    "singleUsePlasticLaw": {
+      "complianceScore": 85,
+      "bottleRegulation": "Bans bottles <500ml",
+      "reusableBottles": "19L bottles refillable 50 times",
+      "wastePrevention": "170 tonnes/year prevented"
+    },
+    "ecoTax": {
+      "rates": "2-100 Cape Verdean escudos per item",
+      "coverage": ["PET containers", "plastic packaging", "disposable cups"],
+      "revenue": "Supports waste management"
+    },
+    "internationalCompliance": {
+      "ratified": ["Basel Convention", "MARPOL Annex V", "Paris Agreement"],
+      "gaps": ["Bamako Convention not signed", "BBNJ not ratified"]
+    }
+  },
+  "scoringCriteria": {
+    "environmentalImpact": {
+      "co2Reduction": "0.12 kg CO2 per bottle",
+      "oceanProtection": "0.8 bottles prevented per scan",
+      "treeEquivalent": "2.5 trees per kg CO2 saved"
+    },
+    "policyAlignment": {
+      "singleUseReduction": "Supports Law 22/X/2023",
+      "circularEconomy": "19L reusable bottle initiative",
+      "wasteManagement": "ANAS compliance"
+    },
+    "economicImpact": {
+      "tourismMultiplier": 1.3,
+      "localEconomy": "Supports eco-tourism certification",
+      "costSavings": "Reduces waste management costs"
+    }
+  },
+  "lastUpdated": "2024-01-15",
+  "dataSource": "Cabo Verde Ministry of Environment, UNEP, World Bank"
+}
+

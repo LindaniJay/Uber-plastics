@@ -1,0 +1,149 @@
+{
+  "country": "São Tomé & Príncipe",
+  "population": 223107,
+  "area": 964,
+  "gdp": 0.52,
+  "currency": "STD",
+  "plasticWaste": {
+    "annualGeneration": 4500,
+    "perCapita": 20.2,
+    "recyclingRate": 6.8,
+    "landfillRate": 78.5,
+    "incinerationRate": 10.2,
+    "oceanLeakage": 4.5,
+    "composition": {
+      "PET": 32,
+      "HDPE": 28,
+      "PP": 18,
+      "LDPE": 14,
+      "PS": 5,
+      "Other": 3
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 980,
+      "perCapita": 4.39,
+      "fromPlastic": 68
+    },
+    "oceanPollution": {
+      "plasticWaste": 202,
+      "microplastics": 0.9,
+      "marineLifeImpact": "Medium"
+    },
+    "wasteManagement": {
+      "collectionRate": 45,
+      "treatmentFacilities": 1,
+      "recyclingCenters": 3,
+      "informalSector": 35
+    }
+  },
+  "economicData": {
+    "wasteManagementCost": 1.8,
+    "recyclingValue": 0.6,
+    "tourismImpact": 8.5,
+    "employment": {
+      "formal": 45,
+      "informal": 180
+    }
+  },
+  "challenges": [
+    "Very limited waste collection infrastructure",
+    "High transportation costs between islands",
+    "Low public awareness about plastic pollution",
+    "Limited government funding for environmental programs",
+    "Small market size limiting recycling economics",
+    "Dependency on imports for most plastic products"
+  ],
+  "opportunities": [
+    "Growing eco-tourism sector",
+    "International development partnerships",
+    "Small scale circular economy potential",
+    "Strong community cohesion for environmental action",
+    "Biodiversity conservation alignment",
+    "Sustainable agriculture integration"
+  ],
+  "initiatives": [
+    {
+      "name": "Island Cleanup Program",
+      "description": "Community-based plastic waste collection on both islands",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 800,
+      "bottlesCollected": 15000,
+      "co2Saved": 60
+    },
+    {
+      "name": "School Recycling Education",
+      "description": "Environmental education in schools across the islands",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 1200,
+      "bottlesCollected": 0,
+      "co2Saved": 0
+    },
+    {
+      "name": "Tourist Area Cleanup",
+      "description": "Regular cleaning of tourist areas and beaches",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 300,
+      "bottlesCollected": 8000,
+      "co2Saved": 32
+    }
+  ],
+  "regionalData": {
+    "islands": [
+      {
+        "name": "São Tomé",
+        "population": 201800,
+        "plasticWaste": 4100,
+        "recyclingRate": 7.2
+      },
+      {
+        "name": "Príncipe",
+        "population": 8307,
+        "plasticWaste": 400,
+        "recyclingRate": 5.5
+      }
+    ]
+  },
+  "trends": {
+    "plasticConsumption": {
+      "2020": 18.8,
+      "2021": 19.5,
+      "2022": 19.9,
+      "2023": 20.2,
+      "projected2024": 20.8
+    },
+    "recyclingRate": {
+      "2020": 4.2,
+      "2021": 5.1,
+      "2022": 5.8,
+      "2023": 6.8,
+      "projected2024": 8.5
+    },
+    "oceanLeakage": {
+      "2020": 6.2,
+      "2021": 5.8,
+      "2022": 5.2,
+      "2023": 4.5,
+      "projected2024": 4.0
+    }
+  },
+  "targets": {
+    "2030": {
+      "recyclingRate": 20,
+      "oceanLeakage": 2.5,
+      "circularEconomy": 12
+    },
+    "2050": {
+      "recyclingRate": 40,
+      "oceanLeakage": 1.0,
+      "circularEconomy": 30
+    }
+  }
+}

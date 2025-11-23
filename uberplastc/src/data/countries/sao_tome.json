@@ -1,0 +1,54 @@
+{
+  "name": "São Tomé and Príncipe",
+  "code": "ST",
+  "region": "Central Africa",
+  "island_nation": true,
+  "blue_economy": {
+    "ocean_area_km2": 160000,
+    "coastal_length_km": 209,
+    "marine_protected_areas": 3,
+    "fishing_contribution_gdp": 0.12
+  },
+  "plastic_data": {
+    "imports": {
+      "total_tonnes_2021": 320,
+      "growth_rate_2014_2021": 0.08,
+      "packaging_share": 0.78,
+      "textiles_share": 0.12,
+      "tubes_share": 0.10,
+      "by_year": {
+        "2014": 280,
+        "2015": 290,
+        "2016": 295,
+        "2017": 300,
+        "2018": 305,
+        "2019": 310,
+        "2020": 315,
+        "2021": 320
+      }
+    },
+    "recycling": {
+      "capacity_tonnes_per_year": 50,
+      "current_rate": 0.12,
+      "infrastructure_gap_index": 0.88,
+      "collection_points": 3,
+      "processing_facilities": 1
+    },
+    "environmental_impact": {
+      "co2_per_bottle_kg": 0.03,
+      "ocean_plastic_reduction_per_bottle_kg": 0.18,
+      "marine_ecosystem_benefit_score": 0.92
+    }
+  },
+  "economic_indicators": {
+    "gdp_per_capita_usd": 2050,
+    "population": 223107,
+    "urbanization_rate": 0.73,
+    "tourism_contribution_gdp": 0.15
+  },
+  "sustainability_goals": {
+    "plastic_reduction_target_2030": 0.60,
+    "recycling_rate_target_2030": 0.35,
+    "marine_protection_target_2030": 0.25
+  }
+}

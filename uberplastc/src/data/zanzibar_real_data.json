@@ -1,0 +1,152 @@
+{
+  "country": "Zanzibar",
+  "population": 1650000,
+  "area": 2461,
+  "gdp": 2.5,
+  "currency": "TZS",
+  "plasticWaste": {
+    "annualGeneration": 28000,
+    "perCapita": 17.0,
+    "recyclingRate": 5.2,
+    "landfillRate": 80.5,
+    "incinerationRate": 8.1,
+    "oceanLeakage": 6.2,
+    "composition": {
+      "PET": 38,
+      "HDPE": 22,
+      "PP": 18,
+      "LDPE": 12,
+      "PS": 6,
+      "Other": 4
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 3200,
+      "perCapita": 1.94,
+      "fromPlastic": 420
+    },
+    "oceanPollution": {
+      "plasticWaste": 1736,
+      "microplastics": 3.2,
+      "marineLifeImpact": "High"
+    },
+    "wasteManagement": {
+      "collectionRate": 55,
+      "treatmentFacilities": 2,
+      "recyclingCenters": 5,
+      "informalSector": 50
+    }
+  },
+  "economicData": {
+    "wasteManagementCost": 3.2,
+    "recyclingValue": 1.1,
+    "tourismImpact": 28.5,
+    "employment": {
+      "formal": 180,
+      "informal": 650
+    }
+  },
+  "challenges": [
+    "Limited waste collection infrastructure in rural areas",
+    "High dependency on tourism creating seasonal waste fluctuations",
+    "Insufficient recycling facilities and technology",
+    "Limited public awareness about plastic pollution",
+    "Inadequate waste management funding",
+    "Challenges with waste transportation between islands"
+  ],
+  "opportunities": [
+    "Strong tourism sector creating demand for clean environments",
+    "International partnerships for waste management projects",
+    "Potential for circular economy development",
+    "Community-based waste collection initiatives",
+    "EU and international funding opportunities",
+    "Growing awareness of marine plastic pollution"
+  ],
+  "initiatives": [
+    {
+      "name": "Unguja Waste Management Program",
+      "description": "Comprehensive waste collection and management initiative across Unguja island",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 3500,
+      "bottlesCollected": 85000,
+      "co2Saved": 340
+    },
+    {
+      "name": "Beach Cleanup Campaign",
+      "description": "Regular beach cleaning activities targeting tourist areas",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 1200,
+      "bottlesCollected": 25000,
+      "co2Saved": 100
+    },
+    {
+      "name": "Community Recycling Education",
+      "description": "Education programs on plastic waste management in schools and communities",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 2800,
+      "bottlesCollected": 0,
+      "co2Saved": 0
+    }
+  ],
+  "regionalData": {
+    "islands": [
+      {
+        "name": "Unguja",
+        "population": 1200000,
+        "plasticWaste": 20400,
+        "recyclingRate": 6.1
+      },
+      {
+        "name": "Pemba",
+        "population": 450000,
+        "plasticWaste": 7650,
+        "recyclingRate": 3.8
+      }
+    ]
+  },
+  "trends": {
+    "plasticConsumption": {
+      "2020": 15.8,
+      "2021": 16.2,
+      "2022": 16.8,
+      "2023": 17.0,
+      "projected2024": 17.5
+    },
+    "recyclingRate": {
+      "2020": 3.5,
+      "2021": 4.2,
+      "2022": 4.8,
+      "2023": 5.2,
+      "projected2024": 6.0
+    },
+    "oceanLeakage": {
+      "2020": 7.8,
+      "2021": 7.2,
+      "2022": 6.8,
+      "2023": 6.2,
+      "projected2024": 5.8
+    }
+  },
+  "targets": {
+    "2030": {
+      "recyclingRate": 20,
+      "oceanLeakage": 3.0,
+      "circularEconomy": 12
+    },
+    "2050": {
+      "recyclingRate": 45,
+      "oceanLeakage": 1.0,
+      "circularEconomy": 35
+    }
+  }
+}
+
+
+

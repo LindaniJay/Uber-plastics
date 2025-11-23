@@ -1,0 +1,158 @@
+{
+  "country": "Comoros",
+  "population": 902348,
+  "area": 1862,
+  "gdp": 1.3,
+  "currency": "KMF",
+  "plasticWaste": {
+    "annualGeneration": 18500,
+    "perCapita": 20.5,
+    "recyclingRate": 4.8,
+    "landfillRate": 82.5,
+    "incinerationRate": 8.2,
+    "oceanLeakage": 4.5,
+    "composition": {
+      "PET": 30,
+      "HDPE": 28,
+      "PP": 20,
+      "LDPE": 14,
+      "PS": 5,
+      "Other": 3
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 1850,
+      "perCapita": 2.05,
+      "fromPlastic": 278
+    },
+    "oceanPollution": {
+      "plasticWaste": 832,
+      "microplastics": 2.5,
+      "marineLifeImpact": "High"
+    },
+    "wasteManagement": {
+      "collectionRate": 40,
+      "treatmentFacilities": 1,
+      "recyclingCenters": 2,
+      "informalSector": 60
+    }
+  },
+  "economicData": {
+    "wasteManagementCost": 1.5,
+    "recyclingValue": 0.5,
+    "tourismImpact": 5.8,
+    "employment": {
+      "formal": 65,
+      "informal": 280
+    }
+  },
+  "challenges": [
+    "Very limited waste collection infrastructure",
+    "High poverty rate affecting waste management priorities",
+    "Limited government funding for environmental programs",
+    "Low public awareness about plastic pollution",
+    "Insufficient recycling facilities",
+    "Challenges with waste transportation between islands"
+  ],
+  "opportunities": [
+    "Growing international support for environmental initiatives",
+    "Community-based waste collection potential",
+    "Partnerships with regional organizations",
+    "Potential for circular economy development",
+    "EU funding opportunities",
+    "Growing awareness of marine ecosystem importance"
+  ],
+  "initiatives": [
+    {
+      "name": "Community Plastic Collection Program",
+      "description": "Grassroots initiative for plastic waste collection",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 2200,
+      "bottlesCollected": 38000,
+      "co2Saved": 152
+    },
+    {
+      "name": "Beach Cleanup Initiative",
+      "description": "Regular beach cleaning activities",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 650,
+      "bottlesCollected": 12000,
+      "co2Saved": 48
+    },
+    {
+      "name": "Environmental Education Program",
+      "description": "Education on plastic waste management",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 1800,
+      "bottlesCollected": 0,
+      "co2Saved": 0
+    }
+  ],
+  "regionalData": {
+    "islands": [
+      {
+        "name": "Grande Comore",
+        "population": 316600,
+        "plasticWaste": 6490,
+        "recyclingRate": 5.5
+      },
+      {
+        "name": "Anjouan",
+        "population": 327382,
+        "plasticWaste": 6711,
+        "recyclingRate": 4.5
+      },
+      {
+        "name": "Mohéli",
+        "population": 40800,
+        "plasticWaste": 836,
+        "recyclingRate": 3.8
+      }
+    ]
+  },
+  "trends": {
+    "plasticConsumption": {
+      "2020": 19.2,
+      "2021": 19.8,
+      "2022": 20.2,
+      "2023": 20.5,
+      "projected2024": 21.0
+    },
+    "recyclingRate": {
+      "2020": 3.2,
+      "2021": 3.8,
+      "2022": 4.3,
+      "2023": 4.8,
+      "projected2024": 5.5
+    },
+    "oceanLeakage": {
+      "2020": 5.2,
+      "2021": 4.9,
+      "2022": 4.7,
+      "2023": 4.5,
+      "projected2024": 4.2
+    }
+  },
+  "targets": {
+    "2030": {
+      "recyclingRate": 15,
+      "oceanLeakage": 2.5,
+      "circularEconomy": 10
+    },
+    "2050": {
+      "recyclingRate": 40,
+      "oceanLeakage": 1.0,
+      "circularEconomy": 30
+    }
+  }
+}
+
+
+

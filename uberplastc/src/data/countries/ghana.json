@@ -1,0 +1,54 @@
+{
+  "name": "Ghana",
+  "code": "GH",
+  "region": "West Africa",
+  "island_nation": false,
+  "blue_economy": {
+    "ocean_area_km2": 230000,
+    "coastal_length_km": 539,
+    "marine_protected_areas": 8,
+    "fishing_contribution_gdp": 0.05
+  },
+  "plastic_data": {
+    "imports": {
+      "total_tonnes_2021": 2800,
+      "growth_rate_2014_2021": 0.25,
+      "packaging_share": 0.65,
+      "textiles_share": 0.25,
+      "tubes_share": 0.10,
+      "by_year": {
+        "2014": 1800,
+        "2015": 2000,
+        "2016": 2200,
+        "2017": 2400,
+        "2018": 2500,
+        "2019": 2600,
+        "2020": 2700,
+        "2021": 2800
+      }
+    },
+    "recycling": {
+      "capacity_tonnes_per_year": 500,
+      "current_rate": 0.18,
+      "infrastructure_gap_index": 0.82,
+      "collection_points": 15,
+      "processing_facilities": 5
+    },
+    "environmental_impact": {
+      "co2_per_bottle_kg": 0.025,
+      "ocean_plastic_reduction_per_bottle_kg": 0.12,
+      "marine_ecosystem_benefit_score": 0.78
+    }
+  },
+  "economic_indicators": {
+    "gdp_per_capita_usd": 2400,
+    "population": 32833000,
+    "urbanization_rate": 0.58,
+    "tourism_contribution_gdp": 0.08
+  },
+  "sustainability_goals": {
+    "plastic_reduction_target_2030": 0.45,
+    "recycling_rate_target_2030": 0.50,
+    "marine_protection_target_2030": 0.20
+  }
+}

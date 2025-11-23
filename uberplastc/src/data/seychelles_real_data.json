@@ -1,0 +1,158 @@
+{
+  "country": "Seychelles",
+  "population": 100447,
+  "area": 459,
+  "gdp": 1.8,
+  "currency": "SCR",
+  "plasticWaste": {
+    "annualGeneration": 8500,
+    "perCapita": 84.7,
+    "recyclingRate": 12.5,
+    "landfillRate": 70.2,
+    "incinerationRate": 10.8,
+    "oceanLeakage": 6.5,
+    "composition": {
+      "PET": 42,
+      "HDPE": 20,
+      "PP": 16,
+      "LDPE": 10,
+      "PS": 8,
+      "Other": 4
+    }
+  },
+  "environmentalImpact": {
+    "co2Emissions": {
+      "total": 1250,
+      "perCapita": 12.45,
+      "fromPlastic": 128
+    },
+    "oceanPollution": {
+      "plasticWaste": 552,
+      "microplastics": 1.8,
+      "marineLifeImpact": "Very High"
+    },
+    "wasteManagement": {
+      "collectionRate": 75,
+      "treatmentFacilities": 1,
+      "recyclingCenters": 4,
+      "informalSector": 25
+    }
+  },
+  "economicData": {
+    "wasteManagementCost": 2.8,
+    "recyclingValue": 1.2,
+    "tourismImpact": 45.2,
+    "employment": {
+      "formal": 95,
+      "informal": 320
+    }
+  },
+  "challenges": [
+    "Very high per capita plastic consumption due to tourism",
+    "Limited land for waste disposal",
+    "High cost of waste management infrastructure",
+    "Seasonal waste generation peaks from tourism",
+    "Dependency on imports for most goods",
+    "Marine ecosystem vulnerability to plastic pollution"
+  ],
+  "opportunities": [
+    "Strong tourism sector with high environmental awareness",
+    "International funding for marine protection",
+    "Potential for advanced recycling technology",
+    "Blue economy initiatives",
+    "Strong government commitment to environmental protection",
+    "Partnerships with international conservation organizations"
+  ],
+  "initiatives": [
+    {
+      "name": "Marine Plastic Cleanup Program",
+      "description": "Comprehensive program to reduce marine plastic pollution",
+      "status": "active",
+      "impact": "Very High",
+      "statusColor": "#10B981",
+      "participants": 1800,
+      "bottlesCollected": 42000,
+      "co2Saved": 168
+    },
+    {
+      "name": "Tourism Industry Waste Reduction",
+      "description": "Partnership with hotels and resorts to reduce plastic waste",
+      "status": "active",
+      "impact": "High",
+      "statusColor": "#10B981",
+      "participants": 450,
+      "bottlesCollected": 28000,
+      "co2Saved": 112
+    },
+    {
+      "name": "Community Recycling Initiative",
+      "description": "Local community-based recycling programs",
+      "status": "active",
+      "impact": "Medium",
+      "statusColor": "#10B981",
+      "participants": 1200,
+      "bottlesCollected": 15000,
+      "co2Saved": 60
+    }
+  ],
+  "regionalData": {
+    "islands": [
+      {
+        "name": "Mahé",
+        "population": 77000,
+        "plasticWaste": 6520,
+        "recyclingRate": 14.2
+      },
+      {
+        "name": "Praslin",
+        "population": 9000,
+        "plasticWaste": 762,
+        "recyclingRate": 10.8
+      },
+      {
+        "name": "La Digue",
+        "population": 3000,
+        "plasticWaste": 254,
+        "recyclingRate": 8.5
+      }
+    ]
+  },
+  "trends": {
+    "plasticConsumption": {
+      "2020": 82.1,
+      "2021": 83.5,
+      "2022": 84.2,
+      "2023": 84.7,
+      "projected2024": 85.5
+    },
+    "recyclingRate": {
+      "2020": 9.2,
+      "2021": 10.5,
+      "2022": 11.8,
+      "2023": 12.5,
+      "projected2024": 14.0
+    },
+    "oceanLeakage": {
+      "2020": 8.2,
+      "2021": 7.5,
+      "2022": 7.0,
+      "2023": 6.5,
+      "projected2024": 6.0
+    }
+  },
+  "targets": {
+    "2030": {
+      "recyclingRate": 30,
+      "oceanLeakage": 3.0,
+      "circularEconomy": 18
+    },
+    "2050": {
+      "recyclingRate": 60,
+      "oceanLeakage": 0.5,
+      "circularEconomy": 50
+    }
+  }
+}
+
+
+
